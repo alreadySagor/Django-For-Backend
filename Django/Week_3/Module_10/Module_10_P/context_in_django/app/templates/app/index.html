@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hello</h1>
+    <p>Niche Backend theke Frontend e data ashbe</p>
+    <h1>----------------------------</h1>
+    <h4>Programmer : {{Programmer}}</h4>
+    <h4>Age : {{Age}}</h4>
+    <h4>Blood Group : {{Blood_Group}}</h4>
+    <p>--------------------------------------------------------</p>
+    <p>--------------------------------------------------------</p>
+    <h2>Conditional statement</h2>
+
+    {% if Age >= 20 and Age <= 50 %}
+        <h4>Age : {{Age}}. You are eligile for Sky Diving.</h4>
+    {% elif Age >= 15 and Age <= 19 %}
+        <h4>Age : {{Age}}. Eligible but need some requirments for sky Diving.</h4>
+    {% else %}
+        <h4>Age : {{Age}}. Sorry!. You are not eligile for Sky Diving.</h4>
+    {% endif %}
+    <p>--------------------------------------------------------</p>
+    <p>--------------------------------------------------------</p>
+    <h2>For Loop</h2>
+
+    {% for i in courses %}
+        <h4>{{i.id}} : {{i.name}} : {{i.fee}}</h4>
+    {% endfor %}
+    <p>--------------------------------------------------------</p>
+    <p>--------------------------------------------------------</p>
+    <h2>join function (list of string)</h2>
+        <h4>{{list}}</h4>
+        <h4>{{ list | join:"-" }}</h4>
+    <p>--------------------------------------------------------</p>
+    <p>--------------------------------------------------------</p>
+    <h2>Date Time</h2>
+        <h4>{{ Date | date:"D d M Y" }}</h4>
+        <h4>{{ Date | time:"" }}</h4>
+    <p>--------------------------------------------------------</p>
+    <p>--------------------------------------------------------</p>
+    <h2>Empty kono kichu filtering korte chaile</h2>
+        <h4>{{ value | default:"This is a Empty string" }}</h4>
+    <p>--------------------------------------------------------</p>
+    <p>--------------------------------------------------------</p>
+    <h2>Kono kichu Cut korte chaile</h2>
+    <h4>Python is fun</h4>
+        <h4>{{ "Python is fun" | cut:"is" }}</h4>
+    <p>--------------------------------------------------------</p>
+    <p>--------------------------------------------------------</p>
+    <h2>Kono kichur length dekhte chaile</h2>
+    <h4>Value er length 0, karon value ta ekti empty string</h4>
+    <h4>{{ value | length }}</h4>
+    
+    <p>--------------------------------------------------------</p>
+    <p>--------------------------------------------------------</p>
+    <h2>Kono ekti lekhar nirdishto shongkhokh character dekhte chaile</h2>
+    <h4>{{ "Happy coding, python is fun" | truncatechars:16 }}</h4>
+    
+    <p>--------------------------------------------------------</p>
+    <p>--------------------------------------------------------</p>
+    <h2>Kono ekti lekhar nirdishto shongkhokh word dekhte chaile</h2>
+    <h4>{{ "Happy coding, python is fun" | truncatewords:2 }}</h4>
+    
+    <p>--------------------------------------------------------</p>
+    
+
+
+
+
+
+
+
+</body>
+</html>
