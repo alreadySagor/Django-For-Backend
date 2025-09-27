@@ -57,7 +57,7 @@ Video: 9.1
 	...... Django is a web application framework written in python programming
 		language. it is based on MVT (Model View Template) design pattern.
 
-		it is also called batteries included framework because Django provides built-in features for everything.
+		it is also called "batteries included framework" because Django provides built-in features for everything.
 
  
 
