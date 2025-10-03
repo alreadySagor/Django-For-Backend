@@ -15,11 +15,11 @@ def home(request):
         'Str' : "",
 
         'lis' : [
-            {'name' : "Dulal", 'Age' : 55},
-            {'name' : "Samsunnaher", 'Age' : 43},
-            {'name' : "Salim", 'Age' : 27},
-            {'name' : "Sagor", 'Age' : 23},
-            {'name' : "Dola", 'Age' : 15},
+            {'name' : "John", 'Age' : 53},
+            {'name' : "Lara", 'Age' : 43},
+            {'name' : "Alex", 'Age' : 27},
+            {'name' : "William", 'Age' : 23},
+            {'name' : "Laura", 'Age' : 15},
         ]
 
     }
