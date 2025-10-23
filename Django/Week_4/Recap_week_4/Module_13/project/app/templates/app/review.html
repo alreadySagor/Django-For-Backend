@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div style="width: 50%; height: 500ox; margin: auto" class="pt-5">
+    <h3>Movie Rating Form</h3>
+    {% comment %} 
+    Email, password ba dorkari kono data submit korte chaile ba website/software e use korte chaie amra "post" request ta use korbo
+    karon, post request use korle url er moddhe username, email, password egula show korbe na tai onno kew nite parbena.
+    ar jodi get request ta use kori tahole urls er moddhe value gula show korbe jeta secure na. 
+    {% endcomment %}
+    <form method = 'post' action = '/app/see_review/'>
+    {% comment %} <form method = "get"> {% endcomment %}
+    {% csrf_token %} {% comment %} this token used to secure this form {% endcomment %}
+  <div class="mb-3">
+    <label for="exampleInputName" class="form-label">Name</label>
+    <input type="text" class="form-control" id="exampleInputName" aria-describedby="nameHelp" name = 'username'>
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Email address</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name = 'email'>
+  </div>
+  <select class="form-select" aria-label="Default select example" name = "rating">
+    <option selected>Ratings</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
+  <div class="mb-3">
+    <label for="reviews" class="form-label">Write your reviews</label>
+    <input type="text" class="form-control" id="reviews" aria-describedby="reviewsHelp" name = 'review'>
+  </div>
+  <button type="submit" class="btn btn-primary" style="margin-top: 15px;">Submit</button>
+</form>
+</div>
+
+{% endblock %}

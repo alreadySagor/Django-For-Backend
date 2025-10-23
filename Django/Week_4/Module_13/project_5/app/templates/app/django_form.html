@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load crispy_forms_tags %}
+<form method = "post" style="height: 500px; width: 50%; margin: auto;" class="pt-4" enctype = "multipart/form-data">
+    {% comment %} 
+    enctype = "multipart/form-data" -- eta use korar uddessho hocche ekhon ei form ta shudhu ar kono data like integer ba string type data nibe na
+    eta ekhon multiple data nibe like image, pdf and others sathe eta use na korle ja ja nite parto ta sob kichui nite parbe
+    {% endcomment %}
+    {% csrf_token %}
+    {% comment %} {{form}} {% endcomment %}
+    {% comment %} .as_p use korar fole (jodi table format e thake tahole paragraph format e chole ashbe) paragraph format e chole ashbe {% endcomment %}
+    {% comment %} {{form.as_p}} {% endcomment %}
+    {{form | crispy}} 
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>    
+{% endblock %}
