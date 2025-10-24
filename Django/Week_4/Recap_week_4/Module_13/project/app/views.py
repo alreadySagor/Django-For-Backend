@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 import datetime
-from . forms import contactForm
+from . forms import contactForm, StudentData, PasswordValidation
 # Create your views here.
 def a_home(request):
     return render(request, 'app/a_home.html')
@@ -26,7 +26,32 @@ def review(request):
     return render(request, 'app/review.html')
 
 def django_form(request):
-    form = contactForm(request.POST)
-    if form.is_valid():
-        print(form.cleaned_data)
+    if request.method == 'POST':
+        form = contactForm(request.POST, request.FILES)
+        if form.is_valid():
+            # file = form.cleaned_data['file']
+            # with open('./app/uploads/' + file.name, 'wb+') as destination:
+            #     for chunk in file.chunks():
+            #         destination.write(chunk)
+            print(form.cleaned_data)
+    else:
+        form = contactForm()
     return render(request, 'app/django_form.html', {'form' : form})
+
+def StudentForm(request):
+    if request.method == 'POST':
+        form = StudentData(request.POST, request.FILES)
+        if form.is_valid():
+            print(form.cleaned_data)
+    else:
+        form = StudentData()
+    return render(request, './app/django_form.html', {'form' : form})
+
+def password(request):
+    if request.method == 'POST':
+        form = PasswordValidation(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data)
+    else:
+        form = PasswordValidation()
+    return render(request, './app/django_form.html', {'form' : form})
