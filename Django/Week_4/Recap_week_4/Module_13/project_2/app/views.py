@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from . form import djangoForm
+from . form import djangoForm, StudentData, PasswordCheck
 import datetime
 # Create your views here.
 def movies(request):
@@ -39,4 +39,22 @@ def django_form(request):
             print(form.cleaned_data)
     else:
         form = djangoForm()
+    return render(request, './app/django_form.html', {'form' : form})
+
+def student(request):
+    if request.method == 'POST':
+        form = StudentData(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data)
+    else:
+        form = StudentData()
+    return render(request, './app/django_form.html', {'form' : form})
+
+def password_matcing(request):
+    if request.method == 'POST':
+        form = PasswordCheck(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data)
+    else:
+        form = PasswordCheck()
     return render(request, './app/django_form.html', {'form' : form})
