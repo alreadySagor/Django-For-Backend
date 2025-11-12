@@ -1,0 +1,42 @@
+Movie rating system
+
+App's
+-----
+Distributer,
+Movie,
+Genre,
+
+User,
+Rate_Review
+-----------------------
+
+Distributer can add one or many movies,
+Distributer can add one or many genre,
+Genre can stay one or many movies,
+
+
+User can give rating and review to one or many movies,
+User can give only one rating and review in one movie,
+User can edit and delete review and rating. (when it will be delete then the average rating will be change)
+
+
+
+If admin delete Specific Distributer then automatically delete these movies which add by the deleted distributer.
+Distributer can delete movies which he/she was add.
+Distributer can edit movie which he/she was add.
+
+Frontend Part.
+in homepage, there will be the list of movies like...
+
+Avengers Infinity War
+War 2
+Battle of Galwan
+Wanted
+Om shanti Om
+Raang De Basanti
+Bhool Bhulaiyaan
+.......
+If user click one movie such as Wanted, then user can see the details of this movie.
+In the down side of details there will be reviews and rating which user will share.
+In down side of other users review, user can share his/her rating and review (there will be a form to share it)
+When user click submit button, the page will redirect to the same page and he/she can see all reviews, and rating also his/her one.
