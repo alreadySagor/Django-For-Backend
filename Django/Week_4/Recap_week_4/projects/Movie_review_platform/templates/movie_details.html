@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+title = models.CharField(max_length=30)
+    director = models.CharField(max_length=30)
+    producer = models.CharField(max_length=30)
+    production_company = models.CharField(max_length=30)
+    cast = models.CharField(max_length=100)
+    story = models.TextField()
+    runtime = models.CharField(max_length=30)
+    genre = models.ManyToManyField(Genre)
+    distributer = models.ForeignKey(Distributer, on_delete=models.CASCADE)
+{% block content %}
+    <h1>Hello</h1>
+    {% comment %} <thead>
+    <tr>
+      <th scope="col">Movie Title</th>
+      <th scope="col">Director</th>
+      <th scope="col">Producer</th>
+      <th scope="col">Production Company</th>
+      <th scope="col">Cast</th>
+      <th scope="col">Story</th>
+      <th scope="col">Runtime</th>
+      <th scope="col">Genre</th>
+    </tr>
+  </thead> {% endcomment %}
+    {% for i in data %}
+        {% comment %} <table class="table">
+            <tbody>
+                <tr>
+                <td>{{i.title}}</td>
+                <td>{{i.director}}</td>
+                <td>{{i.producer}}</td>
+                <td>{{i.production_company}}</td>
+                <td>{{i.cast}}</td>
+                <td>{{i.story}}</td>
+                <td>{{i.runtime}}</td>
+                <td>{{i.genre}}</td>
+                </tr>
+            </tbody>
+        </table> {% endcomment %}
+        <div style="width: 99%; height: auto; margin: 10px; background-color: rgba(241, 200, 206, 1);">
+            <div style="padding: 20px;">
+                <h3>Movie :</h3>
+                <p>{{i.title}}</p>
+                <h3>Genre :</h3>
+                {% for gnr in i.genre.all %}
+                    <p>{{gnr.name}}</p>
+                {% endfor %}
+                <h3>Director :</h3>
+                <p>{{i.director}}</p>
+                <h3>Producer :</h3>
+                <p>{{i.producer}}</p>
+                <h3>Production Company :</h3>
+                <p>{{i.production_company}}</p>
+                <h3>Cast :</h3>
+                <p>{{i.cast}}</p>
+                <h3>Story :</h3>
+                <p>{{i.story}}</p>
+                <h3>Runtime :</h3>
+                <p>{{i.runtime}}</p>
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock %}
