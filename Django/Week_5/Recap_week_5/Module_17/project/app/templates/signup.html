@@ -1,29 +1,24 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
     <style>
         .success{
             color: green;
         }
     </style>
-</head>
-  <body>
     
-    {% load crispy_forms_tags %}
     {% if messages%}
         {% for m in messages %}
+        {% comment %} conditional css use bole etake {% endcomment %}
             <small {% if m.tags %} class="{{m.tags}}" {% endif %}>{{m}}</small>
         {% endfor %}
     {% endif %}
 
-    {% comment %} {% if messages %}
-        {% for m in messages %} {% endcomment %}
-            {% comment %} <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    
+    {% comment %}
+    {% if messages %}
+        {% for m in messages %}
+            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header">
                     <img src="..." class="rounded me-2" alt="...">
                     <strong class="me-auto">Success</strong>
@@ -33,16 +28,22 @@
                 <div class="toast-body">
                     {{m}}
                 </div>
-            </div> {% endcomment %}
-            {% comment %} <small {% if m.tags %} class = "{{m.tags}}" {% endif %}>{{m}}</small>
+            </div>
+            <small {% if m.tags %} class = "{{m.tags}}" {% endif %}>{{m}}</small>
         {% endfor %}
-    {% endif %} {% endcomment %}
+    {% endif %}
+    {% endcomment %}
+    
 
 
     
     
     
     <form method = "post" style="width: 50%; margin: auto;" novalidate>
+        {% comment %}
+            "novalidate" user korar karon hocche, jokhon form er kono field e kono data na diye submit kora hoy tokhon html theke ekta error message ashe
+            ami chai sei error message ta html theke na eshe django theke ashuk. Tai "novalidate" use korechi
+        {% endcomment %}
         <h1>Signup Page</h1>
         {% csrf_token %}
         <!-- {{form | crispy }} -->
@@ -51,12 +52,14 @@
             {{fm.label_tag}} {% comment %} first_name, last_name ... ei label tag gula dekhabe  {% endcomment %}
             {{fm}} {% comment %} input box ya dekhabe {% endcomment %}
             {{fm.errors | striptags }}
+            {% comment %}
+                "striptags" tag ta error er jonno help text ba warning er jonno help text gula show koray (field er niche)
+            {% endcomment %}
             {% comment %} error message gula show korbe {% endcomment %}
         {% endfor %}
         <br/>
         <button class="btn btn-primary" type="submit">Submit</button>
+        <br/>
+        <small>Already have an account? <a href = "{% url 'login' %}">Login</a></small>
     </form>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-  </body>
-</html>
+{% endblock %}
