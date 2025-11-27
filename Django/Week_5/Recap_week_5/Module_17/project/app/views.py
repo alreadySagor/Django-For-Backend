@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import RegisterForm, ChangeUserData
 from django.contrib import messages # kono kaj sompurno korar por message show korate chaile eta import korte pari, eta built-in ekta jinis tai project er sobkhanei etake access korte parbo
 
-# ei built-in "Authentication" form tate username ar password field ta thake sadharonoto"
+# ei built-in "Authentication" form tate username ar password field ta thake sadharonoto" --> Login korar jonno username, ar pass diye database e check korar jonno
 # "PasswordChangeForm" old password diye password change korte use kora hoy
 # "SetPasswordForm" old password charai password change korte use kora
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, SetPasswordForm
@@ -52,6 +52,7 @@ def user_login(request):
     
 
 def profile(request):
+    # return render(request, 'profile.html', {'user' : request.user})
     if request.user.is_authenticated:
         if request.method == 'POST':
             form = ChangeUserData(request.POST, instance = request.user) # request.user --> jei user ti login kora ache seta
@@ -59,7 +60,6 @@ def profile(request):
                 messages.success(request, 'Account updated successfully')
                 form.save() # Bracket er vitore "commit = False" dile data gula databse e save hobe na. Save korar jonno "commit = True" othoba faka rakhte pari
                 # print(form.cleaned_data)
-                return redirect("signup")
         else:
             form = ChangeUserData(instance = request.user) # "instance = request.user" dile user er previous data gula form er moddhe show korbe
         return render(request, 'profile.html', {'form' : form})

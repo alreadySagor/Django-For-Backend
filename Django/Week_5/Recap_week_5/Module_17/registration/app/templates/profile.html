@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+{% comment %}
+    {% if messages%}
+        {% for m in messages %}
+            <p class = "bg-success p-3 text-white ">{{m}}</p>
+        {% endfor %}
+    {% endif %}
+    <br/>
+    {% endcomment %}
+
+    <h2>Welcome to Profile Page</h2>
+    <h4>Hello {{user}}</h4>
+
+    <p>
+        <a class = "btn btn-info" href="{% url 'pass_change' %}">Change your password</a>
+        <a class = "btn btn-warning" href="{% url 'pass_change2' %}">Change your password without old password</a>
+    </p>
+
+
+    <form method = "post" style="width: 50%; margin: auto;" novalidate>
+        <h1>Edit/Change/Update data</h1>
+        {% csrf_token %}
+        {% comment %}
+            eije error gula ashteche, jei error gula dekhte parchi na, egula ashole amader kono field theke ashteche na
+            but database ba backend theke konovabe ashteche jeta ashole dekhte pacchi na.
+            ei type er kono error jodi thake tahole nicher moto condition use kore error gula print korte pari
+        {% endcomment %}
+        {% if form.non_field_errors %}
+            {% for err in form.non_field_errors %}
+                <p class="bg-danger text-white p-3">{{err}}</p>
+            {% endfor %}
+        {% endif %}
+        <!-- {{form | crispy }} -->
+        {% for fm in form %}
+            {{fm.label_tag}}
+            {{fm}}
+            {{fm.errors | striptags }}
+  
+        {% endfor %}
+        <br/>
+        <button class="btn btn-warning" type="submit">Submit</button>
+    </form>
+
+
+    {% endblock %}
