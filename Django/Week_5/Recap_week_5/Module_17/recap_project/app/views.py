@@ -1,22 +1,23 @@
 from django.shortcuts import render, redirect
-from .forms import Registration, ChangeUserData
+from .forms import RegistrationForm, ChangeUserData
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, SetPasswordForm
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib import messages
+
 # Create your views here.
 def home(request):
     return render(request, 'home.html')
 
-def signup(request):
+def user_signup(request):
     if not request.user.is_authenticated:
         if request.method == 'POST':
-            form = Registration(request.POST)
+            form = RegistrationForm(request.POST)
             if form.is_valid():
                 messages.success(request, 'Account created successfully')
                 form.save()
                 return redirect("signup")
         else:
-            form = Registration()
+            form = RegistrationForm()
         return render(request, 'signup.html', {'form' : form})
     else:
         return redirect("profile")
@@ -30,8 +31,8 @@ def user_login(request):
                 pswd = form.cleaned_data['password']
                 user = authenticate(username = name, password = pswd)
                 if user is not None:
+                    messages.success(request, 'Logged in successfully')
                     login(request, user)
-                    messages.success(request, 'Successfully logged in')
                     return redirect("profile")
         else:
             form = AuthenticationForm()
@@ -39,17 +40,15 @@ def user_login(request):
     else:
         return redirect("profile")
 
-def user_logout(request):
-    logout(request)
-    return redirect("login")
 
 def profile(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
             form = ChangeUserData(request.POST, instance = request.user)
             if form.is_valid():
-                messages.success(request, 'Account updated successfully')
+                messages.success(request, 'Information updated successfully')
                 form.save()
+                return redirect("profile")
         else:
             form = ChangeUserData(instance = request.user)
         return render(request, 'profile.html', {'form' : form})
@@ -61,7 +60,7 @@ def pass_change(request):
         if request.method == 'POST':
             form = PasswordChangeForm(user = request.user, data = request.POST)
             if form.is_valid():
-                messages.success(request, 'Password changed successfuly')
+                messages.success(request, 'Password updated successfully')
                 form.save()
                 update_session_auth_hash(request, form.user)
                 return redirect("profile")
@@ -76,7 +75,7 @@ def pass_change2(request):
         if request.method == 'POST':
             form = SetPasswordForm(user = request.user, data = request.POST)
             if form.is_valid():
-                messages.success(request, 'Password changed successfuly')
+                messages.success(request, 'Password updated successfully')
                 form.save()
                 update_session_auth_hash(request, form.user)
                 return redirect("profile")
@@ -85,3 +84,7 @@ def pass_change2(request):
         return render(request, 'pass_change.html', {'form' : form})
     else:
         return redirect("signup")
+
+def user_logout(request):
+    logout(request)
+    return redirect("login")
