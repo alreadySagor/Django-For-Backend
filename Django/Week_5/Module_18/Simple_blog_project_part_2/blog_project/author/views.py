@@ -4,10 +4,10 @@ from django.contrib import messages
 
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm 
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
-from django.contrib import messages
 
 from django.contrib.auth.decorators import login_required
 from post.models import Post
+
 # Create your views here.
 # def add_author(request):
 #     if request.method == 'POST':
@@ -23,7 +23,6 @@ def register(request):
     if request.method == 'POST':
         form = forms.RegistrationForm(request.POST)
         if form.is_valid():
-            messages.success(request, 'Account created successfully')
             form.save()
             messages.success(request, 'Account created successfully')
             return redirect("register")

@@ -5,13 +5,13 @@ from categories.models import Category
 def home(request, category_slug = None):
     data = Post.objects.all()
     if category_slug is not None:
-        category = Category.objects.get(slug = category_slug)
+        category = Category.objects.get(slug = category_slug) # 
         # ei slug field ta kon object er ekta part, se object ta ke first e get kore ber kore niye ashlam
         data = Post.objects.filter(category = category)
-        # je object ta pelam, ei catgory object ta ekhon pass kore dilam category = category te
+        # je object ta pelam, ei catgory object ta ekhon pass kore dilam category = category te, fole selected category'r sathe mil ache emon sob category'r post gula show korbe.
     categories = Category.objects.all()
     
-    return render(request, 'home.html', {'data' : data, 'category' : categories})
+    return render(request, 'home.html', {'data' : data, 'categories' : categories})
 
 
 # eta complex ekta jinish. Tai eta use na kore simple kichu ekta use korbo. (etar poriborte ei line ta use korechi "data = Post.objects.filter(category = category)")
@@ -32,4 +32,4 @@ def home(request, category_slug = None):
 #         category = Category.objects.get(slug = category_slug) # slug je field model e likhechilam seta = amader category slug kore dilam taile ekhn kon category er slug sei category object peye jabo
 #         data = Post.objects.filter(category  = category) # post er category te category object bosiye filter korlam, ager data er sathe overright hoye jabe
 #     categories = Category.objects.all() # sob category dekhabo
-#     return render(request, 'home.html', {'data' : data, 'category' : categories})
+#     return render(request, 'home.html', {'data' : data, 'categories' : categories})
