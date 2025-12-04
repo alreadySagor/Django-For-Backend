@@ -3,7 +3,7 @@ from . import forms
 from . import models
 from django.contrib.auth.decorators import login_required
 
-from django.views.generic import CreateView, UpdateView, DeleteView
+from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 from django.urls import reverse_lazy
 
 #----------------------------------------------------------------------------------------------------------------------
@@ -62,3 +62,8 @@ class DeletePostView(DeleteView):
     success_url = reverse_lazy('profile')
     pk_url_kwarg = 'id'
 #----------------------------------------------------------------------------------------------------------------------
+class DetailsPostView(DetailView):
+    model = models.Post
+    template_name = 'post_details.html'
+    pk_url_kwarg = 'id' # jodi url e "details/<int:pk>" pk use kortam tahole ekhane ar pk bole dewa lagtona, pk bade jodi onno kichu ditam tahole sei bole deya namtai ekhane dite hoto (jemon id)
+      

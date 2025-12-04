@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% comment %} lokkhoniyo bishoy: post.title, post.content etc ekhane post ta hocche post app ta, class based view use korar karone context hisebe kichu na pathaleu chole, app er nam use korlei hoy {% endcomment %}
+{% block content %}
+<div class="col-12">
+    <div class="card mx-2">
+        <div class="card-body">
+            <img src="{{post.image.url}}" class="card-img-top" alt="..." style = "width: 50%;">
+            <h2 class="card-title">{{post.title}}</h2>
+            <p class="card-text">{{post.content}}</p>
+            <p>Author : {{post.author.first_name}} {{post.author.last_name}}</p>
+            <p>Category : 
+                {% for cate in post.category.all %}
+                    <button class = "btn btn-warning btn-sm m-2" disabled >{{cate.name}}</button>
+                {% endfor %}
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
