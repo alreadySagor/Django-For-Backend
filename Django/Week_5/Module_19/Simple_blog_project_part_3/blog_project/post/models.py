@@ -14,3 +14,14 @@ class Post(models.Model):
     # file = models.FileField(max_length=250 ,upload_to='post/media/uploads', blank=True, null=True)
     def __str__(self):
         return self.title
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name = 'comment') # related = 'comment' er mane holo comment er sahajje Post model er title, content, category etc access korte parbo
+    name = models.CharField(max_length=30)
+    email = models.EmailField() 
+    # unique = True means ekta email diye 1 ta comment kora jabe. (Pore korbo)
+    body = models.TextField()
+    created_on = models.DateTimeField(auto_now_add=True) # jokhoni ei class er object toiri hobe, sei time ta rekhe dibe.
+
+    def __str__(self):
+        return f"Comments by {self.name}"

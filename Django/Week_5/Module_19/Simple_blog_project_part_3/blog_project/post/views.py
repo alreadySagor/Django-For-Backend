@@ -66,4 +66,23 @@ class DetailsPostView(DetailView):
     model = models.Post
     template_name = 'post_details.html'
     pk_url_kwarg = 'id' # jodi url e "details/<int:pk>" pk use kortam tahole ekhane ar pk bole dewa lagtona, pk bade jodi onno kichu ditam tahole sei bole deya namtai ekhane dite hoto (jemon id)
-      
+    
+    def post(self, request, *args, **kwargs):
+        comment_form = forms.CommentForm(data=self.request.POST)
+        post = self.get_object() # get.object othoba self er por shudhu object eki kotha. Post model er ekta object toiri korlam
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False) # save howar age ei comment er moddhe (comment_form) je data gula ache seta new_comment e save hobe
+            new_comment.post = post # post model er je object ta store kore rakha chilo seta ekhane pass kore dilam. Keno? amra boltechilam amader comment er sathe amader post er ekta relationship ache arki. To setar jonno comment er post er sathe post (post model) er objecta bosiye dilam arki.
+            new_comment.save()
+        return self.get(request, *args, **kwargs)
+
+    # comment form pass korbo niche.
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        post = self.object # post model er object ekhane store korlam
+        comment = post.comment.all()
+        comment_form = forms.CommentForm()
+
+        context['comment'] = comment
+        context['comment_form'] = comment_form
+        return context

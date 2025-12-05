@@ -2,6 +2,8 @@
 {% load crispy_forms_tags %}
 {% comment %} lokkhoniyo bishoy: post.title, post.content etc ekhane post ta hocche post app ta, class based view use korar karone context hisebe kichu na pathaleu chole, app er nam use korlei hoy {% endcomment %}
 {% block content %}
+{% csrf_token %}
+
 <div class="col-12">
     <div class="card mx-2">
         <div class="card-body">
@@ -16,5 +18,26 @@
             </p>
         </div>
     </div>
+</div>
+
+<div class="card m-2">
+    <h5 class = "p-3">Total Comments : {{comment | length}}</h5>
+    {% for cmnt in comment %}
+        <div class="card-body border m-2">
+            <p><b>{{cmnt.name}}</b> {{cmnt.created_on}}</p>
+            <p>{{cmnt.body}}</p>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="card m-2">
+  <div class="card-body">
+    <form method = "post">
+        <h1> Add Comment </h1>
+        {% csrf_token %}
+        {{comment_form | crispy}}
+        <button class = "btn btn-warning">Submit</button>
+    </form>
+  </div>
 </div>
 {% endblock %}
