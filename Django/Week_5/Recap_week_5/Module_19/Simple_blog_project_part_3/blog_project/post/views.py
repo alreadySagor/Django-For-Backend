@@ -15,4 +15,20 @@ def add_post(request):
     else:
         form = forms.PostForm()
     return render(request, 'add_post.html', {'form' : form})
-            
+
+def edit_post(request, id):
+    post = models.Post.objects.get(pk = id)
+    form = forms.PostForm(instance = post)
+    if request.method == 'POST':
+        form = forms.PostForm(request.POST, instance = post)
+        if form.is_valid():
+            form.instance.author = request.user
+            form.save()
+            messages.success(request, 'Post updated successfully')
+            return redirect("profile")
+    return render(request, 'add_post.html', {'form' : form})
+
+def delete_post(request, id):
+    post = models.Post.objects.get(pk = id)
+    post.delete()
+    return redirect("profile")

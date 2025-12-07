@@ -3,6 +3,7 @@ from .forms import RegistrationForm, ChangeUserData
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from post.models import Post, Comment
 
 def register(request):
     if request.method == 'POST':
@@ -25,8 +26,7 @@ def user_login(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, 'Logged in successfully')
-                # return redirect("profile")
-                return redirect("login")
+                return redirect("profile")
             else:
                 messages.warning(request, 'Login information incorrect')
     else:
@@ -34,7 +34,8 @@ def user_login(request):
         return render(request, 'register.html', {'form' : form, 'type' : 'Login'})
 
 def profile(request):
-    return render(request, 'profile.html')
+    data = Post.objects.filter(author = request.user)
+    return render(request, 'profile.html', {'data': data})
 
 def edit_profile(request):
     if request.method == 'POST':
@@ -42,8 +43,7 @@ def edit_profile(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Account updated successfully')
-            # return redirect("profile")
-            return redirect("edit_profile")
+            return redirect("profile")
     else:
         form = ChangeUserData(instance = request.user)
     return render(request, 'update_profile.html', {'form' : form})
@@ -55,8 +55,7 @@ def pass_change(request):
             form.save()
             messages.success(request, 'Password Updated Successfully')
             update_session_auth_hash(request, form.user)
-            # return render("profile")
-            return render("login")
+            return render("profile")
     else:
         form = PasswordChangeForm(request.user)
     return render(request, 'pass_change.html', {'form' : form})
