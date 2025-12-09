@@ -15,7 +15,9 @@
                 <th scope="col">Instrument Type</th>
                 <th scope="col">Album Name</th>
                 <th scope="col">Release Date</th>
-                <th scope="col">Actions</th>
+                {% if request.user.is_authenticated %}
+                  <th scope="col">Actions</th>
+                {% endif %}
               </tr>
             </thead>
             {% for data in album_data %}
@@ -28,10 +30,13 @@
                     <td>{{data.musician.instrument_type}}</td>
                     <td>{{data.album_name}}</td>
                     <td>{{data.album_release_date}}</td>
-                    <td>
-                      <a style="text-decoration: none; color: black;" href="{% url 'edit' data.id %}">Edit</a>
-                      <a style="text-decoration: none; color: black;" href="{% url 'delete_album_musician' data.id %}">Delete</a>
-                    </td>
+
+                    {% if request.user.is_authenticated %}
+                      <td>
+                        <a style="text-decoration: none; color: black;" href="{% url 'edit' data.id %}">Edit</a>
+                        <a style="text-decoration: none; color: black;" href="{% url 'delete_album_musician' data.id %}">Delete</a>
+                      </td>
+                    {% endif %}
                   </tr>
                 </tbody>
             {% endfor %}
