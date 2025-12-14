@@ -8,4 +8,4 @@ def view_data(request):
     # album_data = Album.objects.all()
     # return render(request, 'view_data.html', {'musician_data' : musician_data, 'album_data' : album_data})
     album_data = Album.objects.all()
-    return render(request, 'view_data.html', {'album_data' : album_data})
+    return render(request, 'home.html', {'album_data' : album_data})

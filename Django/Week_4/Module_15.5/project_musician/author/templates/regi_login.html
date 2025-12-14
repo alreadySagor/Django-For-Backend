@@ -4,8 +4,23 @@
 <form style = "width : 50%; margin : auto" method = "post">
     <h1> {{type}} </h1>
     {% csrf_token %}
-    {{form | crispy}}
-    {% if {{type}} == 'Registration' %}
+    <!-- {{form | crispy}} -->
+
+    {% if type == 'Login' %}
+        {% if form.non_field_errors %}
+            {% for err in form.non_field_errors %}
+                <p class="bg-danger text-white p-3">{{err}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endif %}
+
+    {% for fm in form %}
+        {{fm.label_tag}}
+        {{fm}}
+        {{fm.errors | striptags}}
+    {% endfor %}
+    <br/>
+    {% if type == 'Registration' %}
         <button class = "btn btn-warning">Signup</button>
     {% else %}
         <button class = "btn btn-warning">Login</button>
