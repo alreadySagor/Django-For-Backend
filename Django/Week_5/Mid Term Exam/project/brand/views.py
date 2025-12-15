@@ -1,5 +1,14 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from .forms import BrandForm
+from django.contrib import messages
 # Create your views here.
-def brand(request):
-    return HttpResponse("This is a brand page")
+def add_brand(request):
+    if request.method == 'POST':
+        form = BrandForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Brand added Successfully')
+            return redirect("add_brand")
+    else:
+        form = BrandForm()
+    return render(request, 'add_brand.html', {'form' : form})

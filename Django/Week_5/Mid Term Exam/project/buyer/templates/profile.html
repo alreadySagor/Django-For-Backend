@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <div class="d-flex flex-wrap p-4">
+        <div class="col-10 p-3">
+            <h4>Total car you bought : {{data | length}}</h4>
+            <div class="d-flex flex-wrap pt-5">
+                {% for car in data %}
+                    <div class="col-sm-3">
+                        <div class="card mx-2">
+                            <div class="card-body">
+                                <img src="{{car.image.url}}" class="card-img-top" alt="...">
+                                <h5 class="card-title"><a class="text-decoration-none text-dark" href="{% url 'car_details' car.id %}">{{car.brand}}</a></h5>
+                                <p class="card-text">{{car.model_name}}</p>
+                                <p class="card-text">{{car.features | truncatewords:10}}</p>
+                                <p class="card-text">BDT. {{car.price}}</p>
+                                <br/>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="col-2 bg-white p-3">
+            <div>
+                {% for data in form %}
+                    <h5>UserId</h5>
+                    <p>{{data.id}}</p>
+                    <h5>Username : </h5>
+                    <p>{{data.username}}</p>
+                    <h5>Name : </h5>
+                    <p>{{data.first_name}} {{data.last_name}}</p>
+                    <h5>Email : </h5>
+                    <p>{{data.email}}</p>
+                {% endfor %}
+                <br/>
+                <a class="btn btn-primary" href="{% url 'edit_profile' %}">Edit Your Profile</a>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

@@ -1,5 +1,29 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from . import forms, models
+from django.contrib import messages
 # Create your views here.
-def car(request):
-    return HttpResponse("This is a Car page")
+def add_car(request):
+    if request.method == 'POST':
+        form = forms.CarForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Car added successfully')
+            return redirect("homepage")
+    else:
+        form = forms.CarForm()
+    return render(request, 'add_car.html', {'form' : form})
+
+def car_details(request, id):
+    car = models.Car.objects.get(pk = id)
+    if request.method == 'POST':
+        form = forms.CommentForm(request.POST)
+        if form.is_valid():
+            new_form =  form.save(commit=False)
+            new_form.car = car
+            new_form.save()
+            messages.success(request, 'Comment added successfully')
+            return redirect("homepage")
+    else:
+        form = forms.CommentForm()
+    comment = car.comment.all()
+    return render(request, 'car_details.html', {'form' : form, 'car' : car, 'comment' : comment})
