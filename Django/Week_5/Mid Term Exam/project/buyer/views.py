@@ -12,65 +12,82 @@ from .models import Buy
 
 from django.shortcuts import get_object_or_404
 
-
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 def registration(request):
-    if request.method == 'POST':
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Account Created Successfully')
-            return redirect("login")
+    if not request.user.is_authenticated:
+        if request.method == 'POST':
+            form = RegistrationForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Account Created Successfully')
+                return redirect("login")
+        else:
+            form = RegistrationForm()
+        return render(request, 'regi_login.html', {'form' : form, 'type' : 'Registration'})
     else:
-        form = RegistrationForm()
-    return render(request, 'regi_login.html', {'form' : form, 'type' : 'Registration'})
+        return redirect("profile")
 
 def user_login(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(request, request.POST)
-        if form.is_valid():
-            name = form.cleaned_data['username']
-            pswd = form.cleaned_data['password']
-            user = authenticate(username = name, password = pswd)
-            if user is not None:
-                login(request, user)
-                messages.success(request, 'Logged in Successful')
-                return redirect("profile")
+    if not request.user.is_authenticated:
+        if request.method == 'POST':
+            form = AuthenticationForm(request, request.POST)
+            if form.is_valid():
+                name = form.cleaned_data['username']
+                pswd = form.cleaned_data['password']
+                user = authenticate(username = name, password = pswd)
+                if user is not None:
+                    login(request, user)
+                    messages.success(request, 'Logged in Successful')
+                    return redirect("profile")
+        else:
+            form = AuthenticationForm(request)
+        return render(request, 'regi_login.html', {'form' : form, 'type' : 'Login'})
     else:
-        form = AuthenticationForm(request)
-    return render(request, 'regi_login.html', {'form' : form, 'type' : 'Login'})
+        return redirect("profile")
 
 def user_logout(request):
     logout(request)
     return redirect("login")
 
+
 def profile(request):
-    form = User.objects.filter(id = request.user.id)
-    data = Buy.objects.filter(user = request.user)
-    return render(request, 'profile.html', {'form' : form, 'data' : data})
+    if request.user.is_authenticated:
+        form = User.objects.filter(id = request.user.id)
+        data = Buy.objects.filter(user = request.user)
+        return render(request, 'profile.html', {'form' : form, 'data' : data})
+    else:
+        return redirect("register")
 
 def edit_profile(request):
-    if request.method == 'POST':
-        form = ChangeUserData(request.POST, instance = request.user)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Profile Updated Successfully')
-            return redirect("profile")
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = ChangeUserData(request.POST, instance = request.user)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Profile Updated Successfully')
+                return redirect("profile")
+        else:
+            form = ChangeUserData(instance = request.user)
+        return render(request, 'update_profile.html', {'form' : form})
     else:
-        form = ChangeUserData(instance = request.user)
-    return render(request, 'update_profile.html', {'form' : form})
+        return redirect("register")
 
 def pass_change(request):
-    if request.method == 'POST':
-        form = PasswordChangeForm(request.user, request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Password Updated Successfully')
-            update_session_auth_hash(request, form.user)
-            return redirect("profile")
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = PasswordChangeForm(request.user, request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Password Updated Successfully')
+                update_session_auth_hash(request, form.user)
+                return redirect("profile")
+        else:
+            form = PasswordChangeForm(request.user)
+        return render(request, 'pass_change.html', {'form' : form})
     else:
-        form = PasswordChangeForm(request.user)
-    return render(request, 'pass_change.html', {'form' : form})
+        return redirect("register")
+
 
 def buy_car(request, id):
     car = get_object_or_404(Car, pk=id)
@@ -93,4 +110,4 @@ def buy_car(request, id):
             car.save()
         messages.success(request, 'Congratulations! Successfully bought this car.')
         return redirect("profile")
-    # return redirect("profile")
+    return redirect("profile")

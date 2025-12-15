@@ -1,17 +1,24 @@
 from django.shortcuts import render, redirect
 from . import forms, models
 from django.contrib import messages
+
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
+
 def add_car(request):
-    if request.method == 'POST':
-        form = forms.CarForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Car added successfully')
-            return redirect("homepage")
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = forms.CarForm(request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Car added successfully')
+                return redirect("homepage")
+        else:
+            form = forms.CarForm()
+        return render(request, 'add_car.html', {'form' : form})
     else:
-        form = forms.CarForm()
-    return render(request, 'add_car.html', {'form' : form})
+        return redirect("register")
 
 def car_details(request, id):
     car = models.Car.objects.get(pk = id)
