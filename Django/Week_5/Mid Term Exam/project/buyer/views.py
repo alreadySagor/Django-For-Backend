@@ -14,6 +14,7 @@ from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
+from django.views.generic import UpdateView
 
 # Create your views here.
 #----------------------------------------------------------------------------------------------------------------------
@@ -31,6 +32,20 @@ class BuyerLoginView(LoginView):
         context = super().get_context_data(**kwargs)
         context['type'] = 'Login'
         return context
+#----------------------------------------------------------------------------------------------------------------------
+class EditBuyerView(UpdateView):
+    model = User
+    form_class = ChangeUserData
+    template_name = "update_profile.html"
+    success_url = reverse_lazy("profile")
+
+    def get_object(self):
+        return self.request.user
+    
+    def form_valid(self, form):
+        messages.success(self.request, 'Profile Updated Successfully')
+        return super().form_valid(form)
+    
 #----------------------------------------------------------------------------------------------------------------------
 
 
@@ -79,19 +94,19 @@ def profile(request):
     else:
         return redirect("register")
 
-def edit_profile(request):
-    if request.user.is_authenticated:
-        if request.method == 'POST':
-            form = ChangeUserData(request.POST, instance = request.user)
-            if form.is_valid():
-                form.save()
-                messages.success(request, 'Profile Updated Successfully')
-                return redirect("profile")
-        else:
-            form = ChangeUserData(instance = request.user)
-        return render(request, 'update_profile.html', {'form' : form})
-    else:
-        return redirect("register")
+# def edit_profile(request):
+#     if request.user.is_authenticated:
+#         if request.method == 'POST':
+#             form = ChangeUserData(request.POST, instance = request.user)
+#             if form.is_valid():
+#                 form.save()
+#                 messages.success(request, 'Profile Updated Successfully')
+#                 return redirect("profile")
+#         else:
+#             form = ChangeUserData(instance = request.user)
+#         return render(request, 'update_profile.html', {'form' : form})
+#     else:
+#         return redirect("register")
 
 def pass_change(request):
     if request.user.is_authenticated:
