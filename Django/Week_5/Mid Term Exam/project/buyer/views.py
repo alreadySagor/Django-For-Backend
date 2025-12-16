@@ -9,11 +9,31 @@ from car.forms import CarForm
 from .forms import BuyForm
 from django.db import transaction
 from .models import Buy
-
 from django.shortcuts import get_object_or_404
-
 from django.contrib.auth.decorators import login_required
+
+from django.contrib.auth.views import LoginView, LogoutView
+from django.urls import reverse_lazy
+
 # Create your views here.
+#----------------------------------------------------------------------------------------------------------------------
+class BuyerLoginView(LoginView):
+    template_name = "regi_login.html"
+    def get_success_url(self):
+        return reverse_lazy('profile')
+    def form_valid(self, form):
+        messages.success(self.request, 'Logged in Successful')
+        return super().form_valid(form)
+    def form_invalid(self, form):
+        messages.success(self.request, 'Login Information Incorrect')
+        return super().form_invalid(form)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['type'] = 'Login'
+        return context
+#----------------------------------------------------------------------------------------------------------------------
+
+
 def registration(request):
     if not request.user.is_authenticated:
         if request.method == 'POST':
@@ -28,23 +48,23 @@ def registration(request):
     else:
         return redirect("profile")
 
-def user_login(request):
-    if not request.user.is_authenticated:
-        if request.method == 'POST':
-            form = AuthenticationForm(request, request.POST)
-            if form.is_valid():
-                name = form.cleaned_data['username']
-                pswd = form.cleaned_data['password']
-                user = authenticate(username = name, password = pswd)
-                if user is not None:
-                    login(request, user)
-                    messages.success(request, 'Logged in Successful')
-                    return redirect("profile")
-        else:
-            form = AuthenticationForm(request)
-        return render(request, 'regi_login.html', {'form' : form, 'type' : 'Login'})
-    else:
-        return redirect("profile")
+# def user_login(request):
+#     if not request.user.is_authenticated:
+#         if request.method == 'POST':
+#             form = AuthenticationForm(request, request.POST)
+#             if form.is_valid():
+#                 name = form.cleaned_data['username']
+#                 pswd = form.cleaned_data['password']
+#                 user = authenticate(username = name, password = pswd)
+#                 if user is not None:
+#                     login(request, user)
+#                     messages.success(request, 'Logged in Successful')
+#                     return redirect("profile")
+#         else:
+#             form = AuthenticationForm(request)
+#         return render(request, 'regi_login.html', {'form' : form, 'type' : 'Login'})
+#     else:
+#         return redirect("profile")
 
 def user_logout(request):
     logout(request)
