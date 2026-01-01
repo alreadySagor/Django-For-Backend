@@ -20,8 +20,11 @@ class UserRagistrationForm(UserCreationForm):
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'account_type', 'birth_date', 'gender', 'street_address', 'postal_code', 'city', 'country']
     
+     # built in vabe commit = True kore deya ache. Kintu emon hotei pare user commit = False diye rakhche
     def save(self, commit = True):
-        our_user = super().save(commit=False) # ami database e data save korbona ekhon.
+        # super use kore User Model er data gulo niye ashlam
+        our_user = super().save(commit=False) # "commit = False" mane ami database e data save korbona ekhon.
+       
         if commit == True:
             our_user.save() # user model e data save korlam
             account_type = self.cleaned_data.get('account_type')
@@ -32,7 +35,8 @@ class UserRagistrationForm(UserCreationForm):
             city = self.cleaned_data.get('city')
             street_address = self.cleaned_data.get('street_address')
 
-            UserAddress.objects.create(
+            # user er jonno ei address ta make hoye jabe.
+            UserAddress.objects.create( # user er ekta object make korlam.
                 user = our_user,
                 postal_code = postal_code,
                 country = country,
@@ -48,8 +52,11 @@ class UserRagistrationForm(UserCreationForm):
             )
         return our_user
     
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, *args, **kwargs): # Constructor.
+        # parent class (UserCreationForm) ke call kortechi super er maddhome,
+        # parent class ke inherite kore (__init__ er sahajje) overwrite korlam.
+        # *args (kewword chara parameter), **kwargs (keyword soho parameter) --> parameter hisebe kichu dei ba na dei tate kono somossha hobe na.
+        super().__init__(*args, **kwargs) # parent ke call kortechi (UserCreationForm).
 
         for field in self.fields:
             self.fields[field].widget.attrs.update({
@@ -74,8 +81,8 @@ class UserUpdateForm(forms.ModelForm):
         model = User
         fields = ['first_name', 'last_name', 'email']
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, *args, **kwargs): # constructor
+        super().__init__(*args, **kwargs) # parent class er (ModelForm) __init__ function take inherite kore niye ashlam. Tarpor Overwrite korbo.
         for field in self.fields:
             self.fields[field].widget.attrs.update({
                 'class': (
@@ -86,15 +93,16 @@ class UserUpdateForm(forms.ModelForm):
                 )
             })
         # jodi user er account thake 
-        if self.instance:
+        if self.instance: # ekta class er instance ba object. (instance jodi thake.)
             try:
-                user_account = self.instance.account
-                user_address = self.instance.address
-            except UserBankAccount.DoesNotExist:
-                user_account = None
+                user_account = self.instance.account # orthat je user ta request korteche tar account ta (account model er data) 
+                user_address = self.instance.address # addres model er data
+            except UserBankAccount.DoesNotExist: # Bank account jodi na thake.
+                user_account = None # bank account nai mane tar kono account nai, address o nai.
                 user_address = None
 
-            if user_account:
+            if user_account: # jodi user er account thake.
+                # Tahole ei field gulate oi user er information gula thakbe jegula se account create korar somoy fillup korche.
                 self.fields['account_type'].initial = user_account.account_type
                 self.fields['gender'].initial = user_account.gender
                 self.fields['birth_date'].initial = user_account.birth_date
@@ -108,7 +116,7 @@ class UserUpdateForm(forms.ModelForm):
         if commit:
             user.save()
 
-            user_account, created = UserBankAccount.objects.get_or_create(user=user) # jodi account thake taile seta jabe user_account ar jodi account na thake taile create hobe ar seta created er moddhe jabe
+            user_account, created = UserBankAccount.objects.get_or_create(user=user) # jodi account thake taile seta jabe user_account ar jodi account na thake taile create hobe ar seta created er moddhe jabe (save hobe)
             user_address, created = UserAddress.objects.get_or_create(user=user) 
 
             user_account.account_type = self.cleaned_data['account_type']
