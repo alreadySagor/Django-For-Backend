@@ -7,8 +7,9 @@ class Transaction(models.Model):
     amount = models.DecimalField(decimal_places = 2, max_digits = 12)
     balance_after_transaction = models.DecimalField(decimal_places = 2, max_digits = 12)
     transaction_type = models.IntegerField(choices = TRANSACTION_TYPE, null = True)
-    timestamp = models.DateTimeField(auto_now_add = True)
+    timestamp = models.DateTimeField(auto_now_add = True) # jokhon ekta transaction object toiri hobe sei time ta store kore rakhbo.
     loan_approve = models.BooleanField(default = False)
 
     class Meta:
+        # er kaj hocche, onek gula trasaction hoye pare to amra segulake sort korbo timestamp er upor
         ordering = ['timestamp']

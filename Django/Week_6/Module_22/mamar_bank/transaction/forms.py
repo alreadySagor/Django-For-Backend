@@ -8,7 +8,7 @@ class TransactionForm(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         self.account = kwargs.pop('account') # account value ke pop kore anlam. | keyword argument er moddhe built in kichu jinish ke pass kore dibo
-        super.__init__(*args, **kwargs)
+        super.__init__(*args, **kwargs) # Parent class er __init__ ke overwrite korbo
         self.fields['tranaction_type'].disabled = True # ei field disable thakbe
         self.fields['tranaction_type'].widget = forms.HiddenInput() # user er theke hide kora thakbe
 
