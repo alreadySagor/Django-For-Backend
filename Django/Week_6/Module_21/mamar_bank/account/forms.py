@@ -22,7 +22,7 @@ class UserRagistrationForm(UserCreationForm):
     
      # built in vabe commit = True kore deya ache. Kintu emon hotei pare user commit = False diye rakhche
     def save(self, commit = True):
-        # super use kore User Model er data gulo niye ashlam
+        # super use kore User Model er data gulo niye ashlam (UserCreationForm)
         our_user = super().save(commit=False) # "commit = False" mane ami database e data save korbona ekhon.
        
         if commit == True:
@@ -55,7 +55,7 @@ class UserRagistrationForm(UserCreationForm):
     def __init__(self, *args, **kwargs): # Constructor.
         # parent class (UserCreationForm) ke call kortechi super er maddhome,
         # parent class ke inherite kore (__init__ er sahajje) overwrite korlam.
-        # *args (kewword chara parameter), **kwargs (keyword soho parameter) --> parameter hisebe kichu dei ba na dei tate kono somossha hobe na.
+        # *args (keyword chara parameter), **kwargs (keyword soho parameter) --> parameter hisebe kichu dei ba na dei tate kono somossha hobe na.
         super().__init__(*args, **kwargs) # parent ke call kortechi (UserCreationForm).
 
         for field in self.fields:
