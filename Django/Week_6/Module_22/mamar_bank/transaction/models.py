@@ -11,5 +11,5 @@ class Transaction(models.Model):
     loan_approve = models.BooleanField(default = False)
 
     class Meta:
-        # er kaj hocche, onek gula trasaction hoye pare to amra segulake sort korbo timestamp er upor
+        # er kaj hocche, onek gula trasaction hote pare to amra segulake sort korbo timestamp er upor
         ordering = ['timestamp']

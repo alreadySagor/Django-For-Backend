@@ -1,20 +1,24 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.views.generic import CreateView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Transaction
 
 from . forms import DepositForm, WithdrawForm, LoanRequestForm
-from constants import DEPOSIT, WITHDRAWAL, LOAN, LOAN_PAID
+from .constants import DEPOSIT, WITHDRAWAL, LOAN, LOAN_PAID
 from django.contrib import messages
+from datetime import datetime
+from django.db.models import Sum
+from django.views import View
+from django.urls import reverse_lazy
 # Create your views here.
 
 # ei view ke inherit kore amra deposit, withdraw, loan request er kaj korbo
 class TransactionCreateMixin(LoginRequiredMixin, CreateView):
-    template_name = ''
+    template_name = 'transaction/transaction_form.html'
     model = Transaction
     title = '' # ei title view ta class based view te thake na. (HTML title ja frontend e show korbe) Eita kono ekta koushol use kore pass kore dibo.
-    success_url = ''
+    success_url = reverse_lazy('transaction_report')
 
     """
     "TransactionForm & TransactionCreateMixin er combination e nicher documentation/lekha ta"
@@ -42,6 +46,7 @@ class TransactionCreateMixin(LoginRequiredMixin, CreateView):
         context.update({
             'title' : self.title
         })
+        return context
 
 class DepositMoneyView(TransactionCreateMixin):
     # jehetu template, model egula Deposit, Withdraw, LoanRequest sobar jonno same thakbe
@@ -85,7 +90,7 @@ class WithdrawMoneyView(TransactionCreateMixin):
         messages.success(self.request, f"Successfully withdrawn ${amount} from your account")
         return super().form_valid(form)
 
-class LoanRequestView(Transaction):
+class LoanRequestView(TransactionCreateMixin):
     form_class = LoanRequestForm
     title = 'Request For Loan'
 
@@ -104,11 +109,13 @@ class LoanRequestView(Transaction):
         return super().form_valid(form)
     
 class TransactionReportView(LoginRequiredMixin, ListView):
-    template_name = ''
+    template_name = 'transaction/transaction_report.html'
     model = Transaction
     balance = 0 # eta built-in kono field na.
+    context_object_name = 'report_list'
 
     def get_queryset(self):
+        # jodi user kono type filter na kore tahole tar total transaction report dekhabo.
         queryset = super().get_queryset().filter(
             account = self.request.user.account
         )
@@ -117,5 +124,49 @@ class TransactionReportView(LoginRequiredMixin, ListView):
 
         if start_date_str and end_date_str:
             start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date()
+            end_date = datetime.strptime(end_date_str, '%Y-%m-%d').date()
         
+            # User jodi filter kore tahole queryset ta emon hobe.
+            # Eta bujhte somossha hole ba kothin lagle (Nicher ta kheyal kori)
+            # user er account er information gulake filter kortechi. (queryset = super().get_queryset().filter(account = self.request.user.account)) ei account er user er
+            queryset = queryset.filter(timestamp__date__gte = start_date, timestamp__date__lte = end_date) # gte --> greater than equal, lte --> less than equal
+
+            self.balance = Transaction.objects.filter(timestamp__date__gte = start_date, timestamp__date__lte = end_date).aggregate(Sum('amount'))['amount__sum']
+        else:
+            self.balance = self.request.user.account.balance
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        # built-in context ke niye ashbo tarpor setake context.update er sahajje overwrite kore dibo.
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'account' : self.request.user.account
+        })
+        return context
+    
+class PayLoanView(LoginRequiredMixin, View):
+    def get(self, request, loan_id):
+        loan = get_object_or_404(Transaction, id = loan_id)
         
+        if loan.loan_approve: # ekjon user loan pay korte parbe tokhoni jokhon tar loan approve hobe.
+            user_account = loan.account
+            if loan.amount < user_account.balance:
+                user_account.balance -= loan.amount
+                loan.balance_after_transaction = user_account.balance
+                user_account.save()
+                loan.transaction_type = LOAN_PAID
+                loan.save()
+                return redirect('loan_list')
+            else:
+                messages.error(self.request, f'Loan amount is greater than available balance')
+                return redirect('loan_pay')
+
+class LoanListView(LoginRequiredMixin, ListView):
+    model = Transaction
+    template_name = 'transaction/loan_request.html'
+    context_object_name = 'loans' # total loan list ta ei loans er moddhe thakbe.
+
+    def get_queryset(self):
+        user_account = self.request.user.account
+        queryset = Transaction.objects.filter(account = user_account, transaction_type = LOAN)
+        return queryset

@@ -9,9 +9,9 @@ class TransactionForm(forms.ModelForm):
     # Account ta je pop hocche ba ei jinish ta actually kothay use hocche seta amra dekhte parbo (views.py te get_form_kwargs er moddhe)
     def __init__(self, *args, **kwargs):
         self.account = kwargs.pop('account') # account value ke pop kore anlam. | keyword argument er moddhe built in kichu jinish ke pass kore dibo
-        super.__init__(*args, **kwargs) # Parent class er __init__ ke overwrite korbo
-        self.fields['tranaction_type'].disabled = True # ei field disable thakbe
-        self.fields['tranaction_type'].widget = forms.HiddenInput() # user er theke hide kora thakbe
+        super().__init__(*args, **kwargs) # Parent class er __init__ ke overwrite korbo
+        self.fields['transaction_type'].disabled = True # ei field disable thakbe
+        self.fields['transaction_type'].widget = forms.HiddenInput() # user er theke hide kora thakbe
 
     def save(self, commit = True):
         self.instance.account = self.account # je user ta request korteche tar kono object jodi amader database e thake tahole sei instance er account je jabo, giye self.account ke rekhe dibo
