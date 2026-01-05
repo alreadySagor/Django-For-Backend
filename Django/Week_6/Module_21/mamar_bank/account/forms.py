@@ -92,7 +92,7 @@ class UserUpdateForm(forms.ModelForm):
                     'focus:bg-white focus:border-gray-500'
                 )
             })
-        # jodi user er account thake 
+        # jodi user er account thake / current logged in user. 
         if self.instance: # ekta class er instance ba object. (instance jodi thake.)
             try:
                 user_account = self.instance.account # orthat je user ta request korteche tar account ta (account model er data) 
@@ -103,6 +103,7 @@ class UserUpdateForm(forms.ModelForm):
 
             if user_account: # jodi user er account thake.
                 # Tahole ei field gulate oi user er information gula thakbe jegula se account create korar somoy fillup korche.
+                # Form load হলে আগের data auto fill হবে
                 self.fields['account_type'].initial = user_account.account_type
                 self.fields['gender'].initial = user_account.gender
                 self.fields['birth_date'].initial = user_account.birth_date
@@ -131,3 +132,15 @@ class UserUpdateForm(forms.ModelForm):
             user_address.save()
 
         return user
+    
+"""
+Form → User
+     → UserAddress
+     → UserBankAccount
+
+     
+Form → User (update)
+     → UserAddress (update/create)
+     → UserBankAccount (update/create)
+
+"""
