@@ -8,7 +8,7 @@ class Transaction(models.Model):
     balance_after_transaction = models.DecimalField(decimal_places=2, max_digits=12)
     transaction_type = models.IntegerField(choices=TRANSACTION_TYPE, null = True)
     timestamp = models.DateTimeField(auto_now_add=True)
-    laon_approve = models.BooleanField(default=False)
+    loan_approve = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['timestamp']
