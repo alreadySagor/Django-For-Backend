@@ -11,8 +11,21 @@ from datetime import datetime
 from django.db.models import Sum
 from django.views import View
 from django.urls import reverse_lazy
+
+from django.core.mail import EmailMessage, EmailMultiAlternatives
+from django.template.loader import render_to_string
 # Create your views here.
 
+#-------------------------------------------------------------------------
+def send_transaction_email(user, amount, subject, template):
+    message = render_to_string(template, {
+        'user' : user,
+        'amount' : amount,
+    })
+    send_email = EmailMultiAlternatives(subject, '', to=[user.email])
+    send_email.attach_alternative(message, "text/html")
+    send_email.send()
+#-------------------------------------------------------------------------
 # ei view ke inherit kore amra deposit, withdraw, loan request er kaj korbo
 class TransactionCreateMixin(LoginRequiredMixin, CreateView):
     template_name = 'transaction/transaction_form.html'
@@ -70,6 +83,10 @@ class DepositMoneyView(TransactionCreateMixin):
             update_fields = ['balance']  
         )
         messages.success(self.request, f'${amount} was deposited to your account successfully')
+        #----------------------------------
+        # Sending Email
+        send_transaction_email(self.request.user, amount, "Deposit Message", 'transaction/deposit_mail.html')
+        #----------------------------------
         return super().form_valid(form)
     
 class WithdrawMoneyView(TransactionCreateMixin):
@@ -88,6 +105,10 @@ class WithdrawMoneyView(TransactionCreateMixin):
             update_fields = ['balance']
         )
         messages.success(self.request, f"Successfully withdrawn ${amount} from your account")
+        #----------------------------------------
+        # Sending Email
+        send_transaction_email(self.request.user, amount, "Withdrawal Message", 'transaction/withdraw_mail.html')
+        #----------------------------------------
         return super().form_valid(form)
 
 class LoanRequestView(TransactionCreateMixin):
@@ -106,6 +127,10 @@ class LoanRequestView(TransactionCreateMixin):
         if current_loan_count >= 3:
             return HttpResponse("You have crossed your limits")
         messages.success(self.request, f"Loan request for amount ${amount} has been successfully sent to admin")
+        #----------------------------------
+        # Sending Email
+        send_transaction_email(self.request.user, amount, "Loan Request Message", 'transaction/loan_request_mail.html')
+        #----------------------------------
         return super().form_valid(form)
     
 class TransactionReportView(LoginRequiredMixin, ListView):
