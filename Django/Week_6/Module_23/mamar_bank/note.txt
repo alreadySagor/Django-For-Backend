@@ -1,0 +1,6 @@
+Environment Variable ki?
+
+secret je bishoy ache segulake hidden rakhe.
+
+Project er code er moddhe emon onek bishoy thakte pare jegula onno kew dekhe nite pare. (Normally github e code push korar por github theke)
+tar jonno install kore nite hobe "pip install django-environ"
