@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 
+import dj_database_url
+
 import environ
 env = environ.Env()
 environ.Env.read_env()
@@ -30,10 +32,12 @@ SECRET_KEY = env("SECRET_KEY")
 # SECRET_KEY = 'django-insecure-e95^oc-td-=18@$8!7qzxxy*9p0wz(a+kapv$6h@cl92yxi5+y'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
+CSRF_TRUSTED_ORIGINS = ['https://local-bank.onrender.com', 'https://*.127.0.0.1']
 
 # Application definition
 
@@ -92,15 +96,22 @@ WSGI_APPLICATION = 'mamar_bank.wsgi.application'
 # }
 
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': env("DB_NAME"),
+#         'USER': env("DB_USER"),
+#         'PASSWORD': env("DB_PASSWORD"),
+#         'HOST': env("DB_HOST"),
+#         'PORT': env("DB_PORT"),
+#     }
+# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env("DB_NAME"),
-        'USER': env("DB_USER"),
-        'PASSWORD': env("DB_PASSWORD"),
-        'HOST': env("DB_HOST"),
-        'PORT': env("DB_PORT"),
-    }
+    'default': dj_database_url.config(
+        # Replace this value with your local database's connection string.
+        default='postgresql://mamarbank_cb9z_user:n0Xu7QIS3GKMsMnvUm3vsi16DbS8toAq@dpg-d5fjfbkhg0os73dprr3g-a.oregon-postgres.render.com/mamarbank_cb9z',
+    )
 }
 
 # Password validation
