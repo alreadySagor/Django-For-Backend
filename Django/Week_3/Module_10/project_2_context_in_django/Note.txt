@@ -1,0 +1,3 @@
+Python/ Django te context mane ki?
+
+jokhon amra backend theke frontend e data pathai tokhon seta dictionary format e pathai, so etake amra boltechi context

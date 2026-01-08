@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h3>About the Album and Musician</h3>
+    
+    <div style="width: 90%; margin: 0 auto;">
+        <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Musician Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Album Rating</th>
+                <th scope="col">Instrument Type</th>
+                <th scope="col">Album Name</th>
+                <th scope="col">Release Date</th>
+                {% if request.user.is_authenticated %}
+                  <th scope="col">Actions</th>
+                {% endif %}
+              </tr>
+            </thead>
+            {% for data in album_data %}
+                <tbody>
+                  <tr>
+                    <th scope="row">{{data.id}}</th>
+                    <td>{{data.musician.first_name}} {{data.musician.last_name}}</td>
+                    <td>{{data.musician.email}}</td>
+                    <td>{{data.rating}}</td>
+                    <td>{{data.musician.instrument_type}}</td>
+                    <td>{{data.album_name}}</td>
+                    <td>{{data.album_release_date}}</td>
+
+                    {% if request.user.is_authenticated %}
+                      <td>
+                        <a style="text-decoration: none; color: black;" href="{% url 'edit' data.id %}">Edit</a>
+                        <a style="text-decoration: none; color: black;" href="{% url 'delete_album_musician' data.id %}">Delete</a>
+                      </td>
+                    {% endif %}
+                  </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+    </div>
+
+{% endblock %}

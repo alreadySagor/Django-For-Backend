@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <style>
+        .success{
+            color: green;
+        }
+    </style>
+    
+    {% if messages%}
+        {% for m in messages %}
+        {% comment %} conditional css use bole etake {% endcomment %}
+            <small {% if m.tags %} class="{{m.tags}}" {% endif %}>{{m}}</small>
+        {% endfor %}
+    {% endif %}
+
+    <form method = "post" style="width: 50%; margin: auto;" novalidate>
+        <h1>Signup Page</h1>
+        {% csrf_token %}
+        <!-- {{form | crispy }} -->
+         {% comment %} django form er help text gula na dekhate chaile {% endcomment %}
+        {% for fm in form %}
+            {{fm.label_tag}} {% comment %} first_name, last_name ... ei label tag gula dekhabe  {% endcomment %}
+            {{fm}} {% comment %} input box ya dekhabe {% endcomment %}
+            {{fm.errors | striptags }}
+            {% comment %}
+                "striptags" tag ta error er jonno help text ba warning er jonno help text gula show koray (field er niche)
+            {% endcomment %}
+            {% comment %} error message gula show korbe {% endcomment %}
+        {% endfor %}
+        <br/>
+        <button class="btn btn-primary" type="submit">Submit</button>
+        <br/>
+        {% comment %} <small>Already have an account? <a href = "{% url 'login' %}">Login</a></small> {% endcomment %}
+    </form>
+{% endblock %}

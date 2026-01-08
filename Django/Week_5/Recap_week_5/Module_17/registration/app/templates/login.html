@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+    {% load crispy_forms_tags %}
+    
+    <form method = "post" style="width: 50%; margin: auto;" novalidate>
+        <h1>Login Page</h1>
+        {% csrf_token %}
+        {% comment %}
+            eije error gula ashteche, jei error gula dekhte parchi na, egula ashole amader kono field theke ashteche na
+            but database ba backend theke konovabe ashteche jeta ashole dekhte pacchi na.
+            ei type er kono error jodi thake tahole nicher moto condition use kore error gula print korte pari
+        {% endcomment %}
+        {% if form.non_field_errors %}
+            {% for err in form.non_field_errors %}
+                <p class="bg-danger text-white p-3">{{err}}</p>
+            {% endfor %}
+        {% endif %}
+        <!-- {{form | crispy }} -->
+        {% for fm in form %}
+            {{fm.label_tag}}
+            {{fm}}
+            {{fm.errors | striptags }}
+  
+        {% endfor %}
+        <br/>
+        <button class="btn btn-warning" type="submit">Login</button>
+    </form>
+
+
+{% endblock %}

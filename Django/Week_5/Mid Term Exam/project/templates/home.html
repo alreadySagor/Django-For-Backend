@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+    <div class="d-flex flex-wrap px-5 pt-3 align-items-center">
+        <div class="col-6">
+            <h1>Welcome to Django Blog</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti quae nesciunt dolor. Dolores consequatur adipisci, culpa repellendus dolorum consequuntur qui totam explicabo hic, quasi dolorem ea voluptates? Eum aspernatur deserunt ea dolorem. Sed, quasi atque iste aperiam eaque voluptatum id quae praesentium omnis qui? Ea dolor voluptas quisquam nostrum officiis ipsa fugiat! Ex molestias tenetur itaque ut assumenda omnis, harum reprehenderit aliquid odit! Veniam unde veritatis earum fuga exercitationem ex. Id, ad laboriosam quis veritatis hic aliquid officiis sit in iusto? Voluptatem aliquam veniam a quibusdam iusto iure similique vero iste provident laudantium voluptas, nulla autem magnam consectetur molestias architecto.</p>
+        </div>
+        <div class="col-6">
+            <img src="{% static 'banner.png' %}" style="width: 80%; height: 40%;" />
+        </div>
+    </div>
+
+    
+
+
+    <div class="col-12 p-3 d-flex flex-wrap">
+        <div class="d-flex flex-wrap pt-5"></div>
+            {% for brnd in brand %}
+                <a href="{% url 'brand_wise_car' brnd.slug %}" class="btn btn-primary m-2">{{brnd.name}}</a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="d-flex flex-wrap p-4">
+        <div class="col-10 p-3">
+            <h4>Total Car Found : {{data | length}}</h4>
+            <div class="d-flex flex-wrap pt-5">
+                {% for car in data %}
+                    <div class="col-sm-3">
+                        <div class="card mx-2">
+                            <div class="card-body">
+                                <img src="{{car.image.url}}" class="card-img-top" alt="...">
+                                <h5 class="card-title"><a class="text-decoration-none text-dark" href="{% url 'car_details' car.id %}">{{car.brand}}</a></h5>
+                                <p class="card-text">{{car.model_name}}</p>
+                                <p class="card-text">{{car.features | truncatewords:10}}</p>
+                                <p class="card-text">BDT. {{car.price}}</p>
+                                <p class="card-text">Available {{car.quantity}} pieces</p>
+                                <br/>
+                                {% if request.user.is_authenticated %}
+                                    <!-- <a href="{% url 'buy_car' car.id %}" class="btn btn-success">Buy Now</a> -->
+                                     <form method="POST" action="{% url 'buy_car' car.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-success">
+                                            Buy Now
+                                        </button>
+                                    </form>
+
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hello</h1>
+
+    <p>{{Name}}</p>
+    <p>{{Age}}</p>
+
+    <h3>-------------------------------------------------------------------</h3>
+    <h5>add --- 1. It is used to add an argument to the value. Example</h5>
+    <P>{{ Age | add:"2" }}</P>
+    <h3>-------------------------------------------------------------------</h3>
+    <h3>-------------------------------------------------------------------</h3>
+
+    <h5>addslashes --- 2. It is used to add slashes before quotes. Useful for escaping strings in CSV. Example</h5>
+    <P>{{ Name | addslashes }}</P>
+    <P>If value is “I’m sagor ahmed”, the output will be “I\’m sagor ahmed”.</P>
+    <h3>-------------------------------------------------------------------</h3>
+
+    <h5>capfirst --- 3. It is used to capitalize the first character of the value. If the first character is not a letter, this filter has no effect. Example</h5>
+    <P>{{ Name_2 | capfirst }}</P>
+    <h3>-------------------------------------------------------------------</h3>
+
+    <h5>center --- 4. It is used to center the value in a field of a given width. Example</h5>
+    <P>{{ Name_2 | center:"15" }}</P>
+    <P>If value is “sagor ahmed”, the output will be ” sagor ahmed “.</P>
+    <h3>-------------------------------------------------------------------</h3>
+    
+    <h3>-------------------------------------------------------------------</h3>
+    <h5>cut --- 5. It is used to remove all values of arg from the given string. Example</h5>
+    <P>{{ Name_2 | cut:" " }}</P>
+    <P>If value is “sagor ahmed”, the output will be “sagorahmed”.</P>
+    <h3>-------------------------------------------------------------------</h3>
+    <h3>-------------------------------------------------------------------</h3>
+
+    <h3>-------------------------------------------------------------------</h3>
+    <h5>date --- 6. It is used to format a date according to the given format. Example</h5>
+    <P>{{ Date__Time | date:"D d M Y" }}</P>
+    <h3>-------------------------------------------------------------------</h3>
+
+    <h3>-------------------------------------------------------------------</h3>
+    <h5>time --- 7. It is used to format a time according to the given format. Example</h5>
+    <P>{{ Date__Time | time:"" }}</P>
+    <h3>-------------------------------------------------------------------</h3>
+
+    <h3>-------------------------------------------------------------------</h3>
+    <h5>default --- 8. It is used to give a default value to a variable. If variable evaluates to False, it will use the default argument given else the variable value itself. Example</h5>
+    <P>{{ Str | default:"The string is empty." }}</P>
+    <h3>-------------------------------------------------------------------</h3>
+
+    <h3>-------------------------------------------------------------------</h3>
+    <h5>dictsort --- 9. It takes a list of dictionaries and returns that list sorted by the key given in the argument. Example</h5>
+    <P>{{ lis | dictsort:"name" }}</P>
+    <h3>-------------------------------------------------------------------</h3>
+
+    <h3>-------------------------------------------------------------------</h3>
+    <h5>divisibleby --- 10. It returns True if the value is divisible by the argument. Example</h5>
+    <P>{{ Age | divisibleby:"3" }}</P>
+    <h3>-------------------------------------------------------------------</h3>
+
+    <h3>-------------------------------------------------------------------</h3>
+    <h5>first --- 11. It is used to return the first item in a list. Example</h5>
+    <P>{{ lis | first }}</P>
+    <h3>-------------------------------------------------------------------</h3>
+
+    <h3>-------------------------------------------------------------------</h3>
+    <h5>last --- 12. It is used to return the last item in a list. Example</h5>
+    <P>{{ lis | last }}</P>
+    <h3>-------------------------------------------------------------------</h3>
+
+    <h3>-------------------------------------------------------------------</h3>
+    <h5>join --- 13. It is used to join a list with a string, like Python’s str.join(list) Example</h5>
+    <P>{{ lis | join:" // " }}</P>
+    <h3>-------------------------------------------------------------------</h3>
+
+    <h3>-------------------------------------------------------------------</h3>
+    <h5>length --- 14. It is used to return the length of the value. This works for both strings and lists. Example</h5>
+    <P>length of list : {{ lis | length }}</P>
+    <P>length of string : {{ Name_2 | length }}</P>
+    <h3>-------------------------------------------------------------------</h3>
+
+    <h3>-------------------------------------------------------------------</h3>
+    <h5>lower --- 15. It is used to converts a string into all lowercase. Example</h5>
+    <P>{{ Name_3 | lower }}</P>
+    <h3>-------------------------------------------------------------------</h3>
+    <h3>-------------------------------------------------------------------</h3>
+
+    <h5>make_list --- 16. It is used to return the value turned into a list. For a string, it’s a list of characters. For an integer, the argument is cast to a string before creating a list. Example</h5>
+    <P>{{ Name_3 | make_list }}</P>
+    <P>{{ 13237 | make_list }}</P>
+    <h3>-------------------------------------------------------------------</h3>
+
+    <h5>random --- 17. It is used to return a random item from the given list. Example</h5>
+    <P>{{ lis | random }}</P>
+    <h3>-------------------------------------------------------------------</h3>
+
+    <h5>slice --- 18. It is used to return a slice of the list. Example</h5>
+    <P>{{ lis | slice:":2" }}</P>
+    <h3>-------------------------------------------------------------------</h3>
+
+    <h5>slugify --- 19. It is used to convert to ASCII. It converts spaces to hyphens and removes characters that aren’t alphanumerics, underscores, or hyphens. Converts to lowercase. Also strips leading and trailing whitespace. Example</h5>
+    <P>{{ Name_4 | slugify }}</P>
+    <h3>-------------------------------------------------------------------</h3>
+
+    <h5>title --- 20. It is used to convert a string into titlecase by making words start with an uppercase character and the remaining characters lowercase. This filter makes no effort to keep “trivial words” in lowercase. Example</h5>
+    <P>{{ Name_3 | title }}</P>
+    <P>If value is “sAgOr aHmEd”, the output will be “Sagor Ahmed”</P>
+    <h3>-------------------------------------------------------------------</h3>
+
+    <h3>-------------------------------------------------------------------</h3>
+    <h5>upper --- 21. It is used to converts a string into all uppercase. Example</h5>
+    <P>{{ Name_3 | upper }}</P>
+    <h3>-------------------------------------------------------------------</h3>
+
+    <h3>-------------------------------------------------------------------</h3>
+    <h5>wordcount --- 22. It is used to return the number of words. Example</h5>
+    <P>{{ Name_4 | wordcount }}</P>
+    <h3>-------------------------------------------------------------------</h3>
+    
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+    {% load crispy_forms_tags %}
+    
+    {% if messages %}
+        {% for m in messages %}
+            {% comment %} <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <img src="..." class="rounded me-2" alt="...">
+                    <strong class="me-auto">Success</strong>
+                    <small>11 mins ago</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    {{m}}
+                </div>
+            </div> {% endcomment %}
+            <small {% if m.tags %} class = "{{m.tags}}" {% endif %}>{{m}}</small>
+        {% endfor %}
+    {% endif %}
+
+
+    
+    
+    
+    <form method = "post" style="width: 50%; margin: auto;" novalidate>
+        <h1>Login Page</h1>
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+            {% for err in form.non_field_errors %}
+                <p class="bg-danger text-white p-3">{{err}}</p>
+            {% endfor %}
+        {% endif %}
+        <!-- {{form | crispy }} -->
+         {% comment %} django form er help text gula na dekhate chaile {% endcomment %}
+        {% for fm in form %}
+            {{fm.label_tag}} {% comment %} first_name, last_name ... ei label tag gula dekhabe  {% endcomment %}
+            {{fm}} {% comment %} input box ya dekhabe {% endcomment %}
+            {{fm.errors | striptags }}
+            {% comment %} error message gula show korbe {% endcomment %}
+        {% endfor %}
+        <br/>
+        <button class="btn btn-warning" type="submit">Login</button>
+    </form>
+
+
+{% endblock %}

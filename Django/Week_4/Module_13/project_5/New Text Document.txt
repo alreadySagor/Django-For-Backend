@@ -1,0 +1,5 @@
+pip install crispy-bootstap
+
+crisp form er kaj..
+
+	amra jei django form ti website e use korbo setake arektu sundor korte amader help kore

@@ -1,0 +1,101 @@
+Video: 9.0
+-----------------------
+There are two kinds of software development
+	1. App development
+	2. Web development
+
+Software development er kaj tai hoy ashole request and response diye
+	request ---> response
+	request <--- response
+
+request 4 prokar hoye thake.
+	1. Get (kono kichu pawar jonno ba dekhanor jonno amader je onno url e niye jay
+		 & amra notun kichu dekhte pai seta hocche Get request {ba amake ei data gulo dekhau})
+		"kono kichu pawar request kora"
+	
+	
+	2. Post (mone kori ami ekti post{in facebook or others social platform} ba blog likhechi
+		ekhon seta jeno tader database e save kora thake, etake amra bolte pari post request)
+
+
+	3. Update (kono comment/msg/post ke update korte chaile ba edit korte chaile setake bole update request)
+	
+	4. Delete (kono comment/msg/post ke delete korte chaile setake bole delete request)
+
+
+"""""
+kono ekti post/msg/comment ke dekhte parbe etake bola hoy restriction kora ba authoraization kora
+(ke ei jinishtake dekhte parbe ke parbena etake bole authoraization kora{ba restrcition kora/kore dicchi})
+"""""
+
+Jodi kono website e ei 4 ta feature thake tahole take amra boli "CRUD" project
+
+CRUD mane ki?
+C --> Create kora (post request)
+R --> Retrive (maybe banan vul) ba read kora (get request)
+U --> Update kora (Update request)
+D --> Delete kora (Delete request)
+
+
+Request ta kori ashole ekta databse ba server e.
+Request ta kori ashole frontend theke.
+Request korle je respons ta ashe seta ashe backend theke.
+Tahole request ta hocche "frontend" ar response ta hocche "backend". 
+
+Request, response er khele gula khelbo amra DJANGO bebohar kore.
+----------------------------------
+
+Video: 9.1
+-------------------------
+	Outlines of this module
+1. What is django
+2. Why we need to learn Django?
+3. Unique features of django
+4. how does django work
+
+	... What is Django?
+	...... Django is a web application framework written in python programming
+		language. it is based on MVT (Model View Template) design pattern.
+
+		it is also called "batteries included framework" because Django provides built-in features for everything.
+
+ 
+
+	... Why Django framework?
+	......
+	. Excellent documentation and high scalability.
+	. Used by Top MNCs (Multi National Companies) and Companies, such as instafram, Spotify, Youtube, Bitbucket, Dropbox, etc.
+		and the list is never-ending.
+
+	. easiest framework to learn, rapid development and Batteries fully included.
+
+	. one can intergrate it "Web Scraping, Machine Learning, image Processing, Scientific Computing, etc with web application and do lots and lots of advance stuff.
+
+"""" Database ke Django'r vashay bole/boli "Model" """"
+-------------------------------------------------------
+
+Video: 9-2
+---------------------------
+Virtual Environment
+---------------------------
+Video: 9-3
+---------------------------
+How to Install Django
+---------------------------
+Video: 9-4
+---------------------------
+Django project Structure
+	Outlines
+
+1. Django project Directory Structure
+2. project vs application
+---------------------------
+
+Video: 9-5
+---------------------------
+Working with URLS and views
+
+video: 9-6
+---------------------------
+Working with apps in django
+---------------------------

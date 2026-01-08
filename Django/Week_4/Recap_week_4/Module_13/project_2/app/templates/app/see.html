@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>See</h1>
+    <h6> {{ time | date:"D d M y"}} </h6>
+    <h4>User Name: {{name}}</h4>
+    <h4>Email: {{email}}</h4>
+    <h4>Rating: {{rating}}</h4>
+    <h4>Review: {{review}}</h4>
+    <h4>Verdict: {{verdict}}</h4>
+{% endblock %}

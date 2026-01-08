@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>HTML Forms</h2>
+
+<form action="/action_page.php">
+  <label for="fname">First name:</label><br>
+  <input type="text" id="fname" name="fname" value="John"><br>
+  <label for="lname">Last name:</label><br>
+  <input type="text" id="lname" name="lname" value="Doe"><br><br>
+  <input type="submit" value="Submit">
+</form> 
+
+<body>
+    <h1>This is Home Page</h1>
+    {% comment %} <h2> <a href="/">Home</a></h2>
+    <h2> <a href="/navigation/about/"> Navigation / About </a> </h2>
+    <h2> <a href="/navigation/contact/"> Navigation / Contact </a> </h2> {% endcomment %}
+
+    {% comment %} Backend theke frontend e data pathabo, tokhon seta access korte gele amader evabe access korte hobe {% endcomment %}
+    {% comment %} <h2>{{d.author}}</h2> {% endcomment %}
+
+    <h2>Author : {{author}}</h2>
+    {% comment %} Value dekhate chaile evabe {{age}} likhte hoy {% endcomment %}
+    <h2>Age : {{age}}</h2> 
+    {% comment %} <h2>{{lst}}</h2> {% endcomment %}
+
+    {% comment %} Conditional statement {% endcomment %}
+    {% if age >= 20 %}
+        <h4>Your will get driving license</h4>
+    {% elif age >= 10 and age <= 19 %}
+        <h4>you will not get driving license</h4>
+    {%else%}
+        <h4>You're a child</h4>
+    {% comment %} if ta close kore deyar jonne endif use korte hobe {% endcomment %}
+    {%endif%}
+
+
+
+    {% comment %} List of string er upor django template filtering er join function ta use korte chai tahole{% endcomment %}
+    {% comment %} Etar upor join function ta chalabo {% endcomment %}
+    <h2>{{lst}}</h2>
+    {% comment %} <h1>{{ value | join:" - "}}</h1> {% endcomment %}
+    {% comment %} Ekhane value ta hocche lst {% endcomment %}
+    <h1>{{ lst | join:" - "}}</h1>
+
+    {% comment %} Datetime {% endcomment %}
+    <h1>{{ birthday | date:"D d M Y"}}</h1>
+
+    {% comment %} Empty konokichu thakle seta filtering korte chaile {% endcomment %}
+    <h1>{{ val | default:"an empty string"}}</h1>
+
+    {% comment %} kono kichu cut kore felte chaile {% endcomment %}
+    {% comment %} is ta cut kore felte chaile {% endcomment %}
+    <h1>{{"Python is fun" | cut:"is"}}</h1>
+    {% comment %} Output ashbe: Python fun {% endcomment %}
+
+    {% comment %} length dekhte chaile (val er lenght 0, karon seta empty string) {% endcomment %}
+    <h1>{{ val | length}}</h1>
+
+    {% comment %} kono ekti lekhar koto lenght porjonto dekhte chai setar khetre {% endcomment %}
+    <h1>{{'Happy coding. Python is fun.' | truncatechars:6}}</h1>
+    {% comment %} Ei text theke 6 ta character show korate chaile {% endcomment %}
+
+    <h1>{{'Happy coding. Python is fun.' | truncatewords:2}}</h1>
+    {% comment %} Ei text theke 2 ta word show korate chaile {% endcomment %}
+
+
+    {% comment %} for loop {% endcomment %}
+    {%for i in courses %}
+        <h3>{{i.id}} {{i.name}} {{i.fee}}</h3>
+    {% endfor %}
+</body>
+
+</body>
+</html>
+

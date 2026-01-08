@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+    <div style="background-color: chocolate; height: 250px; width: 600px;">
+        <h2 style="margin-left: 100px;">Reviews and Ratings</h2>
+        <h6> {{ time | date:"D d M y"}} </h6>
+        <h5>Username : {{name}}</h5>
+        <h5>Email : {{email}}</h5>
+        <h4>Rating : {{rating}}<h4>
+        <h4>Review : {{review}}<h4>
+        {% comment %} {% if request.POST.get('rating') >= 3 %}
+            <h4>Verdict : Good<h4>
+        {% else %}
+            <h4>Verdict : Average<h4>
+        {% endif %} {% endcomment %}
+        <h4>Verdict : {{verdict}}<h4>
+    </div>
+{% endblock content%}

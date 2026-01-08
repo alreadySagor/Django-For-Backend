@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body>
+    <h3>Hi i'm inside homepage</h3>
+    {% if data %}
+        <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Roll</th>
+                <th scope="col">Name</th>
+                <th scope="col">Father's name</th>
+                <th scope="col">Address</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+                {% for st in data %}
+                    <tr>
+                    <td>{{st.roll}}</td>
+                    <td>{{st.name}}</td>
+                    <td>{{st.name_of_father}}</td>
+                    <td>{{st.address}}</td>
+                    <td><a class = "btn btn-danger" href ="{% url 'delete_stdnt' st.roll %}">Delete</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h3>No data available to show</h3>
+    {% endif %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>

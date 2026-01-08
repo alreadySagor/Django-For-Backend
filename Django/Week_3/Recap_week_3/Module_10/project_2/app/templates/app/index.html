@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hi I'm Index page inside app</h1>
+    <h2>Author : {{author}}</h2>
+    <h2>Age : {{age}}</h2>
+    <h2>List : {{lst}}</h2>
+
+    {% comment %} Conditional Statement {% endcomment %}
+    {% if age >= 20 %}
+        <h4>You will get the driving license</h4>
+    {% elif age >= 10 and age <= 19 %}
+        <h4>You will not get driving license</h4>
+    {% else %}
+        <h4>You are a child</h4>
+    {% endif %}
+
+    {% comment %} For Loop {% endcomment %}
+    {% for i in courses %}
+        <h3>{{i.id}} -- {{i.name}} -- {{i.fee}}</h3>
+    {% endfor %}
+
+
+    {% comment %} join Function {% endcomment %}
+    <h1> {{lst | join:" - "}} </h1>
+    <h1> {{lst | join:" "}} </h1>
+
+    {% comment %} Date Time {% endcomment %}
+    <h1> {{ birthday | date:"D d M y"}} </h1>
+
+    {% comment %} Empty Value Thakle {% endcomment %}
+    <h1> {{val | default:"an empty string"}} </h1>
+
+    {% comment %} length ber korte chaile {% endcomment %}
+    <h1> {{val | length}} </h1>
+    
+    {% comment %} Cut {% endcomment %}
+    <h1> {{"Python is fun" | cut:" "}} </h1>
+    
+    {% comment %} Truncate {% endcomment %}
+    <h1> {{"Happy coding. Python is fun." | truncatechars:16}} </h1>
+    <h1> {{"Happy coding. Python is fun." | truncatewords:2}} </h1>
+</body>
+</html>
