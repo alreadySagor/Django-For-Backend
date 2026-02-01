@@ -12,7 +12,7 @@ class UserBankAccount(models.Model):
     gender = models.CharField(max_length=10, choices=GENDER_TYPE)
     initial_deposite_date = models.DateTimeField(auto_now_add=True)
     balance = models.DecimalField(default=0, max_digits=12, decimal_places=2)
-    # ekjon user 12 digit er taka rakhte parbe, dui doshomik ghor obdi rakhte parbe, balance defalt vabe 0 thakbe.
+    # ekjon user 12 digit er taka rakhte parbe, dui doshomik ghor obdi show korbe (round kore felbe), balance defalt vabe 0 thakbe.
 
     def __str__(self):
         return str(self.account_no)
