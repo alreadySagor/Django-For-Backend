@@ -26,8 +26,8 @@ class TransactionCreateMixin(LoginRequiredMixin, CreateView):
         tokhon jeta hobe --> tokhoni amader views er get_form_kwargs er account value ta amader TransactionForm er moddhe chole ashbe
         ashar pore ekhane pop hobe (check views.py). Pop hobar por pori user dekhbe je transaction_type ei field ta disable kora
         sei jinish ta fillup korte parbena, amra fillup kore dibo backend theke. Then jokhon eta save korte jabe orthat submit button click korbe
-        tokhon tar account ta capture korar pore tar tar balance take ber kore niye ashlam ebong balance_after_transaction ta amra tar balance ta diye update kore dicchi prottekta bar.
-        then reture kore dichhi return super().save ke --> Parent je chilo(Built-in) take overwrite kore eke save kore dicchi. 
+        tokhon tar account ta capture korar pore tar balance take ber kore niye ashlam ebong balance_after_transaction ta amra tar balance ta diye update kore dicchi prottekta bar.
+        then return kore dichhi return super().save ke --> Parent je chilo(Built-in) take overwrite kore eke save kore dicchi. 
     """
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
