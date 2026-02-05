@@ -5,7 +5,8 @@ const loadServices = () => {
     .catch((err) => console.log(err));
 }
 
-const displayService = (service) => {
+const displayService = (services) => {
+    console.log(services)
     services.forEach((service) => {
         const parent = document.getElementById("service-container");
         const li = document.createElement("li");
@@ -16,7 +17,7 @@ const displayService = (service) => {
                 </div>
                 <div class="card-body  p-3 p-xl-5">
                     <h3 class="card-title h5">${service.name}</h3>
-                    <p class="card-text">${service.description}</p>
+                    <p class="card-text">${service.description.slice(0, 140)}</p>
                     <a href="#" class="btn btn-primary">Details</a>
                 </div>
             </div>
@@ -24,4 +25,6 @@ const displayService = (service) => {
         parent.appendChild(li);
     });
 }
+
+
 loadServices();
