@@ -27,5 +27,34 @@ const displayService = (services) => {
 }
 
 
+const loadDoctors = () => {
+    fetch("https://testing-8az5.onrender.com/doctor/list/")
+    .then(res => res.json())
+    .then((data) => displayDoctors(data?.results)); // data? ekhane ? diye bole deya hoyeche jodi data khuje na pay ba jhamela thakle setar jonno kono error jate na face kori. (Etake bola hoy optional chaining)
+}
+
+const displayDoctors = (doctors) => {
+    doctors?.forEach((doctor) => {
+        const parent = document.getElementById("doctors");
+        const div = document.createElement("div");
+        div.classList.add("doc-card");
+        div.innerHTML = `
+            <img class="doc-img" src=${doctor.image} alt="">
+            <h4>${doctor?.full_name}</h4>
+            <h6>${doctor?.designation}</h6>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, magnam.</p>
+            <p>
+            ${
+                doctor?.specialization?.map((item) => {
+                    return `<button>${item}</button>`;
+                })
+            }
+            </p>
+            <button>Details</button>
+        `;
+        parent.appendChild(div);
+    })
+}
+
 loadServices();
-////
+loadDoctors();
