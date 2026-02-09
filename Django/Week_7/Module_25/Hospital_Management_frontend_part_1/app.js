@@ -27,15 +27,50 @@ const displayService = (services) => {
 }
 
 
+// const loadDoctors = (search) => {
+//     document.getElementById("doctors").innerHTML = "";
+//     document.getElementById("spinner").style.display = "block";
+//     console.log(search);
+//     // `` etar vitore kichu likhle setake bole template string.
+//     fetch(`https://testing-8az5.onrender.com/doctor/list/?search=${search?search : ""}`)
+//     .then(res => res.json())
+//     .then((data) => {
+//         console.log(data);
+//         if (data.results.length > 0) {
+//             document.getElementById("spinner").style.display = "none";
+//             document.getElementById("nodata").style.display = "none";
+//             displayDoctors(data?.results);
+//         } else {
+//             document.getElementById("doctors").innerHTML = "";
+//             document.getElementById("spinner").style.display = "none";
+//             document.getElementById("nodata").style.display = "block";
+//         }
+//     }); // data? ekhane ? diye bole deya hoyeche jodi data khuje na pay ba jhamela thakle setar jonno kono error jate na face kori. (Etake bola hoy optional chaining)
+// }
+
 const loadDoctors = (search) => {
-    // `` etar vitore kichu likhle setake bole template string.
-    fetch(`https://testing-8az5.onrender.com/doctor/list/?search=${search?search : ""}`)
-    .then(res => res.json())
+  document.getElementById("doctors").innerHTML = "";
+  document.getElementById("spinner").style.display = "block";
+  console.log(search);
+  fetch(
+    `https://testing-8az5.onrender.com/doctor/list/?search=${
+      search ? search : ""
+    }`
+  )
+    .then((res) => res.json())
     .then((data) => {
-        console.log(data);
-        displayDoctors(data?.results)
-    }); // data? ekhane ? diye bole deya hoyeche jodi data khuje na pay ba jhamela thakle setar jonno kono error jate na face kori. (Etake bola hoy optional chaining)
-}
+      console.log(data);
+      if (data.results.length > 0) {
+        document.getElementById("spinner").style.display = "none";
+        document.getElementById("nodata").style.display = "none";
+        displayDoctors(data?.results);
+      } else {
+        document.getElementById("doctors").innerHTML = "";
+        document.getElementById("spinner").style.display = "none";
+        document.getElementById("nodata").style.display = "block";
+      }
+    });
+};
 
 const displayDoctors = (doctors) => {
     doctors?.forEach((doctor) => {
@@ -69,7 +104,9 @@ const loadDesignation = () => {
             const parent = document.getElementById("drop-deg");
             const li = document.createElement("li");
             li.classList.add("dropdown-item");
-            li.innerText = item?.name;
+            li.innerHTML = `
+            <li onclick = "loadDoctors('${item.name}')">${item.name}</li>
+            `
             parent.appendChild(li);
         });
     });
@@ -84,7 +121,9 @@ const loadSpecialization = () => {
             const parent = document.getElementById("drop-spe");
             const li = document.createElement("li");
             li.classList.add("dropdown-item");
-            li.innerText = item?.name;
+            li.innerHTML = `
+            <li onclick = "loadDoctors('${item.name}')">${item.name}</li>
+            `
             parent.appendChild(li);
         });
     });

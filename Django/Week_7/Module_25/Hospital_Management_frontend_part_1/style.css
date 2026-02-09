@@ -80,3 +80,11 @@ nav{
     width: 75%;
     border: none;
 }
+
+.nodata{
+    display: none;
+}
+
+#spinner{
+    display: none;
+}
