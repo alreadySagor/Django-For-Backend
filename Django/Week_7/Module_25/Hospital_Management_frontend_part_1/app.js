@@ -27,10 +27,14 @@ const displayService = (services) => {
 }
 
 
-const loadDoctors = () => {
-    fetch("https://testing-8az5.onrender.com/doctor/list/")
+const loadDoctors = (search) => {
+    // `` etar vitore kichu likhle setake bole template string.
+    fetch(`https://testing-8az5.onrender.com/doctor/list/?search=${search?search : ""}`)
     .then(res => res.json())
-    .then((data) => displayDoctors(data?.results)); // data? ekhane ? diye bole deya hoyeche jodi data khuje na pay ba jhamela thakle setar jonno kono error jate na face kori. (Etake bola hoy optional chaining)
+    .then((data) => {
+        console.log(data);
+        displayDoctors(data?.results)
+    }); // data? ekhane ? diye bole deya hoyeche jodi data khuje na pay ba jhamela thakle setar jonno kono error jate na face kori. (Etake bola hoy optional chaining)
 }
 
 const displayDoctors = (doctors) => {
@@ -59,7 +63,7 @@ const displayDoctors = (doctors) => {
 
 const loadDesignation = () => {
     fetch("https://testing-8az5.onrender.com/doctor/designation/")
-    .then((res) = res.json())
+    .then((res) => res.json())
     .then((data) => {
         data.forEach((item) => {
             const parent = document.getElementById("drop-deg");
@@ -74,7 +78,7 @@ const loadDesignation = () => {
 
 const loadSpecialization = () => {
     fetch("https://testing-8az5.onrender.com/doctor/specialization/")
-    .then((res) = res.json())
+    .then((res) => res.json())
     .then((data) => {
         data.forEach((item) => {
             const parent = document.getElementById("drop-spe");
@@ -85,6 +89,11 @@ const loadSpecialization = () => {
         });
     });
 };
+
+const handleSearch = () => {
+    const value = document.getElementById("search").value;
+    loadDoctors(value)
+}
 
 
 loadServices();
