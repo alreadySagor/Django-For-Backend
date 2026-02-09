@@ -27,50 +27,28 @@ const displayService = (services) => {
 }
 
 
-// const loadDoctors = (search) => {
-//     document.getElementById("doctors").innerHTML = "";
-//     document.getElementById("spinner").style.display = "block";
-//     console.log(search);
-//     // `` etar vitore kichu likhle setake bole template string.
-//     fetch(`https://testing-8az5.onrender.com/doctor/list/?search=${search?search : ""}`)
-//     .then(res => res.json())
-//     .then((data) => {
-//         console.log(data);
-//         if (data.results.length > 0) {
-//             document.getElementById("spinner").style.display = "none";
-//             document.getElementById("nodata").style.display = "none";
-//             displayDoctors(data?.results);
-//         } else {
-//             document.getElementById("doctors").innerHTML = "";
-//             document.getElementById("spinner").style.display = "none";
-//             document.getElementById("nodata").style.display = "block";
-//         }
-//     }); // data? ekhane ? diye bole deya hoyeche jodi data khuje na pay ba jhamela thakle setar jonno kono error jate na face kori. (Etake bola hoy optional chaining)
-// }
-
 const loadDoctors = (search) => {
-  document.getElementById("doctors").innerHTML = "";
-  document.getElementById("spinner").style.display = "block";
-  console.log(search);
-  fetch(
-    `https://testing-8az5.onrender.com/doctor/list/?search=${
-      search ? search : ""
-    }`
-  )
-    .then((res) => res.json())
+    document.getElementById("doctors").innerHTML = "";
+    document.getElementById("spinner").style.display = "block";
+    console.log(search);
+    // `` etar vitore kichu likhle setake bole template string.
+    fetch(`https://testing-8az5.onrender.com/doctor/list/?search=${search?search : ""}`)
+    .then(res => res.json())
     .then((data) => {
-      console.log(data);
-      if (data.results.length > 0) {
-        document.getElementById("spinner").style.display = "none";
-        document.getElementById("nodata").style.display = "none";
-        displayDoctors(data?.results);
-      } else {
-        document.getElementById("doctors").innerHTML = "";
-        document.getElementById("spinner").style.display = "none";
-        document.getElementById("nodata").style.display = "block";
-      }
-    });
-};
+        console.log(data);
+        if (data.results.length > 0) {
+            document.getElementById("spinner").style.display = "none";
+            document.getElementById("nodata").style.display = "none";
+            displayDoctors(data?.results);
+        } else {
+            document.getElementById("doctors").innerHTML = "";
+            document.getElementById("spinner").style.display = "none";
+            document.getElementById("nodata").style.display = "block";
+        }
+    }); // data? ekhane ? diye bole deya hoyeche jodi data khuje na pay ba jhamela thakle setar jonno kono error jate na face kori. (Etake bola hoy optional chaining)
+}
+
+
 
 const displayDoctors = (doctors) => {
     doctors?.forEach((doctor) => {
