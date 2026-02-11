@@ -32,7 +32,7 @@ const loadDoctors = (search) => {
     document.getElementById("spinner").style.display = "block";
     console.log(search);
     // `` etar vitore kichu likhle setake bole template string.
-    fetch(`https://testing-8az5.onrender.com/doctor/list/?search=${search?search : ""}`)
+    fetch(`https://testing-8az5.onrender.com/doctor/list/?search=${search ? search : ""}`)
     .then(res => res.json())
     .then((data) => {
         console.log(data);
@@ -46,7 +46,7 @@ const loadDoctors = (search) => {
             document.getElementById("nodata").style.display = "block";
         }
     }); // data? ekhane ? diye bole deya hoyeche jodi data khuje na pay ba jhamela thakle setar jonno kono error jate na face kori. (Etake bola hoy optional chaining)
-}
+};
 
 
 
