@@ -3,7 +3,30 @@ const getparams = () => {
     fetch(`https://testing-8az5.onrender.com/doctor/list/${param}`)
     .then((res) => res.json())
     .then(data => displayDetails(data));
+
+    fetch(`https://testing-8az5.onrender.com/doctor/review/?doctor_id=${param}`)
+    .then((res) => res.json())
+    .then((data) => doctorReview(data));
 };
+
+
+const doctorReview = (reviews) => {
+    reviews.forEach((review) => {
+        const parent = document.getElementById("doc-details-review");
+        const div = document.createElement("div");
+        div.classList.add("review-card");
+        div.innerHTML = `
+            <img src="./images/girl.png" alt="">
+            <h4>${review.reviewer}</h4>
+            <p>
+                ${review.body.slice(0, 100)}
+            </p>
+            <h6>${review.rating}</h6>
+        `;
+        parent.appendChild(div);
+    });
+};
+
 
 const displayDetails = (doctor) => {
     const parent = document.getElementById("doc-details");
