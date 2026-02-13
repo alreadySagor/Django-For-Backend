@@ -6,7 +6,33 @@ const getparams = () => {
 };
 
 const displayDetails = (doctor) => {
-
+    const parent = document.getElementById("doc-details");
+    const div = document.createElement("div");
+    div.classList.add("doc-details-container");
+    div.innerHTML = `
+        <div class="doctor-img">
+            <img src=${doctor.image} alt="">
+        </div>
+        <div class="doc-info">
+            <h1>${doctor.full_name}</h1>
+            ${
+                doctor.specialization.map((item) => {
+                    return `<button class = "doc-details-btn">${item}</button>`;
+                })
+            }
+            ${
+                doctor.designation.map((item) => {
+                    return `<h4>${item}</h4>`;
+                })
+            }
+            <p class="w-50">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis non repellat inventore fugit veritatis vitae.
+            </p>
+            <h4>Fees: ${doctor.fee} BDT</h4>
+            <button>Take Appointment</button>
+        </div>
+    `;
+    parent.appendChild(div);
 };
 
 getparams();
