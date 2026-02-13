@@ -104,3 +104,8 @@ nav{
     border-radius: 50px;
 
 }
+
+footer{
+    padding: 50px;
+    background: linear-gradient(66deg, #1CABC7 -5.25%, #439FA5 46.76%, #4C7C8C 98.77%);
+}
