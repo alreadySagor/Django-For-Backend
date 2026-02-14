@@ -52,7 +52,9 @@ const displayDetails = (doctor) => {
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis non repellat inventore fugit veritatis vitae.
             </p>
             <h4>Fees: ${doctor.fee} BDT</h4>
-            <button>Take Appointment</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Take Appointment
+            </button>
         </div>
     `;
     parent.appendChild(div);
