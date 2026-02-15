@@ -69,7 +69,7 @@
             <input type="radio" name="status" value="online" />
                 Online<br />
 
-            <input type="text" placeholder="Type Your symptom" />
+            <input id="symptom" type="text" placeholder="Type Your symptom" />
             <br>
 
             <select id="time-container" class="p-2 mt-2" id="time" name="time">
@@ -82,7 +82,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button onclick="handleAppointment()" type="button" class="btn btn-primary">Take Appointment</button>
           </div>
         </div>
       </div>
