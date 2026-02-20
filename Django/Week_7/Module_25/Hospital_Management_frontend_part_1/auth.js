@@ -18,6 +18,13 @@ const handleRegistration = (event) => {
         document.getElementById("error").innerText ="";
         if (/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(password)) {
             console.log(info);
+            fetch("https://testing-8az5.onrender.com/patient/register/", {
+                method:"POST",
+                headers:{"content-type" : "application/json"},
+                body: JSON.stringify(info),
+            })
+            .then((res) => res.json())
+            .then((data) => console.log(data));
         } else {
             document.getElementById("error").innerText ="password must contain Minimum eight characters, at least one letter, one number and one special character:";
         }
