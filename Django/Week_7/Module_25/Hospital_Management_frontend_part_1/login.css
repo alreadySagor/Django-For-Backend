@@ -1,18 +1,15 @@
 body{
-    background-color: white;
-
+    background-color:white;
 }
-
 .login-container{
-    height: 100vh;
+    height:100vh;
     display: flex;
     justify-content: center;
     gap: 20px;
-    align-items: center;
-    width: 75%;
+    align-items:center;
+    width:75%;
     margin: auto;
 }
-
 .input{
     padding: 15px 25px;
     border: none;
@@ -20,10 +17,9 @@ body{
     box-shadow: 4px 4px 8px gray;
     border-radius: 5px;
 }
-
 .submit-btn{
     padding: 15px 25px;
-    width: 85%;
+    width:85%;
     margin: auto;
     border: none;
     background-color: rgb(43, 121, 121);
