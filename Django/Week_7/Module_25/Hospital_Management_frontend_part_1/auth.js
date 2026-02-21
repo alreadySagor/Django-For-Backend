@@ -38,3 +38,19 @@ const getValue = (id) => {
     const value = document.getElementById(id).value;
     return value;
 };
+
+
+const handleLogin = (event) => {
+    event.preventDefault();
+    const username = getValue("login-username");
+    const password = getValue("login-password");
+    fetch("https://testing-8az5.onrender.com/patient/login/", {
+        method:"POST",
+        headers:{"content-type" : "application/json"},
+        body: JSON.stringify({username, password}),
+    })
+    .then((res) => res.json())
+    .then((data) => {
+        console.log(data);
+    });
+};

@@ -27,9 +27,9 @@
     <div class="login-container">
         <div class="col-md-6">
             <h1 class="title mt-5">Please Login</h1>
-            <form action="">
-                <input type="text" class="input" placeholder="Username" required/>
-                <input type="password" class="input" placeholder="Password" required/>
+            <form action="" onsubmit="handleLogin(event)">
+                <input id="login-username" type="text" class="input" placeholder="Username" required/>
+                <input id="login-password" type="password" class="input" placeholder="Password" required/>
                 <button class="submit-btn">Login</button>
                 <p><a href="registration.html">go to Registration page</a></p>
             </form>
