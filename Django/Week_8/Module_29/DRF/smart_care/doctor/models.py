@@ -27,10 +27,9 @@ class Doctor(models.Model):
     image = models.ImageField(upload_to="doctor/images/")
     designation = models.ManyToManyField(Designation)
     specialization = models.ManyToManyField(Specialization)
-    # Time diye filter korbona, Aar ekjon doctor er multiple availabe time thakte pare tai AvailableTIme er sathe Doctor er OneToMany (Foreignkey Use korechi)
-    available_time = models.ForeignKey(AvailableTime, on_delete=models.CASCADE)
+    available_time = models.ManyToManyField(AvailableTime)
     fee = models.IntegerField()
     meet_link = models.CharField(max_length=100)
 
     def __str__(self):
-        return f"Dr. {self.user.first_name} {self.user.last_name}"
+        return f"{self.user.first_name} {self.user.last_name}"
