@@ -12,3 +12,4 @@ class AppointmentAdmin(admin.ModelAdmin):
         return obj.doctor.user.first_name
     
 admin.site.register(Appointment, AppointmentAdmin)
+# 
