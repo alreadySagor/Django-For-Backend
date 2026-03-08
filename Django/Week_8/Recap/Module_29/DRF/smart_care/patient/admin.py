@@ -11,3 +11,4 @@ class PatientAdmin(admin.ModelAdmin):
         return obj.user.last_name
 
 admin.site.register(models.Patient, PatientAdmin)
+# 
